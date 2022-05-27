@@ -4,28 +4,13 @@ const dayjs = require("dayjs")
 module.exports = {
     name: "user",
     description: "Affiche les informations de l'utilisateur",
-    run: async (client, message, args) => {
-        args[0] = args[0] || message.author.id;
-        const matches = args[0].match(/^(<@!?)?(\d+)>?$/);
-        if (!matches) message.reply('Membre invalide!');
-        const id = matches[2];
-        member = await message.guild.members.fetch(id);
-        let createdDate = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime)
-        let RelativeCreatedDate = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.RelativeTime)
-        let joinDate = Formatters.time(dayjs(member.joinedTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime)
-        let RelativeJoinDate = Formatters.time(dayjs(member.joinedTimestamp).unix(), Formatters.TimestampStyles.RelativeTime)
-        let embed = new MessageEmbed()
-        .setTitle('Informations de l\'utilisateur')
+    run: (client, message, args) => {
+        let embedGoToSlashCommand = new MessageEmbed()
         .setColor("RANDOM")
-        .addFields(
-            { name: "Pseudo", value: `${member.user.username}`, inline: true },
-            { name: "Tag", value: `${member.user.discriminator}`, inline: true },
-            { name: "ID", value: `${member.id}`, inline: true },
-            { name: "Créé le", value: `${createdDate} (${RelativeCreatedDate})`, inline: true },
-            { name: "Rejoint le", value: `${joinDate} (${RelativeJoinDate})`, inline: true }
-        )
+        .setTitle("Utilisation des Slash Commands")
+        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
         .setTimestamp()
-        message.channel.send({embeds: [embed]}) 
+        message.reply({embeds: [embedGoToSlashCommand]})
     },
 
     options: [

@@ -3,7 +3,14 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "sondage",
     description: "Lancer un sondage",
-    run: (client, message, args) => {console.log(".")},
+    run: (client, message, args) => {
+        let embedGoToSlashCommand = new MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("Utilisation des Slash Commands")
+        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
+        .setTimestamp()
+        message.reply({embeds: [embedGoToSlashCommand]})
+    },
     options: [
         {
             name: "channel",
@@ -51,7 +58,11 @@ module.exports = {
             .setTitle(titreSondage)
             .setDescription(contenu)
             channelID.send({embeds: [embed]})
-            interaction.reply({content: "Sondage envoyé !", ephemeral: "true"})
+            interaction.reply({content: "Sondage envoyé !", ephemeral: "true"}).then(
+                interaction.react("<:plusdeux:973641602876702812>"),
+                interaction.react("<:minus:973641600695689287>"),
+                interaction.react("<:nope:973641602725736588>")
+            )
         }else{
             interaction.reply({content: "Tu n'a pas les permissions pour lancer un sondage !", ephemeral: "true"})
         }

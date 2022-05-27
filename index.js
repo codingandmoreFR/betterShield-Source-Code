@@ -25,6 +25,8 @@ client.on("guildMemberAdd", (member) => {
     member.roles.add("978763926013616199")
 })
 
+
+
 mongoose.connect(process.env.DATABASE_URI, {
     autoIndex: false,
     maxPoolSize: 10,
