@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "invite",
     description: "Ajoute moi !",
+    permissions: [],
     run: (client, message, args) => {
         let embed = new MessageEmbed()
         .setTitle("Ajoute moi !")

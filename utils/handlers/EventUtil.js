@@ -1,5 +1,6 @@
 const { promisify } = require("util");
 const { glob } = require("glob");
+const { CachedManager } = require("discord.js");
 const pGlob = promisify(glob);
 
 module.exports = async client => {

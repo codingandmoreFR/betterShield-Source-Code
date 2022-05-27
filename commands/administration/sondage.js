@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "sondage",
     description: "Lancer un sondage",
+    permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
         .setColor("RANDOM")
@@ -48,24 +49,20 @@ module.exports = {
         }
     ],
     runSlash: async (client, interaction) => {
-        if(interaction.member.permissions.has('ADMINISTRATOR')){
-            let channelID = interaction.options.getChannel("channel")
-            let titreSondage = interaction.options.getString("titre")
-            let contenu = interaction.options.getString("contenu")
-            let colorEmbed = interaction.options.getString("couleur")
-            let embed = new MessageEmbed()
-            .setColor(colorEmbed)
-            .setTitle(titreSondage)
-            .setDescription(contenu)
-            .setFooter(`Par ${interaction.user.tag}`)
-            .setTimestamp()
-            const pool = await channelID.send({embeds: [embed], fetchReply: true})   
-            pool.react("<:plusdeux:973641602876702812>")  
-            pool.react("<:minus:973641600695689287>")
-            pool.react("<:nope:973641602725736588>")
-            interaction.reply({content: "Sondage envoyé !", ephemeral: "true"})            
-        }else{
-            interaction.reply({content: "Tu n'a pas les permissions pour lancer un sondage !", ephemeral: "true"})
-        }
+        let channelID = interaction.options.getChannel("channel")
+        let titreSondage = interaction.options.getString("titre")
+        let contenu = interaction.options.getString("contenu")
+        let colorEmbed = interaction.options.getString("couleur")
+        let embed = new MessageEmbed()
+        .setColor(colorEmbed)
+        .setTitle(titreSondage)
+        .setDescription(contenu)
+        .setFooter(`Par ${interaction.user.tag}`)
+        .setTimestamp()
+        const pool = await channelID.send({embeds: [embed], fetchReply: true})   
+        pool.react("<:plusdeux:973641602876702812>")  
+        pool.react("<:minus:973641600695689287>")
+        pool.react("<:nope:973641602725736588>")
+        interaction.reply({content: "Sondage envoyé !", ephemeral: "true"})            
     }
 }

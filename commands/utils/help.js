@@ -7,6 +7,7 @@ const pGlob = promisify(glob);
 module.exports = {
     name: "help",
     description: "Affiche toutes les commandes du serveur",
+    permissions: [],
     run: (client, message, args) => {
         (await pGlob(`${process.cwd()}/commands/utils/*.js`)).map(async (commandFileMod) => {
             const cmdMod = require(commandFileMod)
