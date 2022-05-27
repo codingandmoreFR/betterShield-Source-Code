@@ -1,46 +1,41 @@
-/*const { MessageEmbed } = require("discord.js")
+const { MessageEmbed } = require("discord.js")
 const { prefix } = require("../../config/config.json")
-const { promisify } = require("util");
-const { glob } = require("glob");
-const pGlob = promisify(glob);
+const { readdirSync } = require("fs")
+const commandFolder = readdirSync("./commands")
 
 module.exports = {
     name: "help",
     description: "Affiche toutes les commandes du serveur",
+    category: 'utils',
     permissions: [],
     run: (client, message, args) => {
-        (await pGlob(`${process.cwd()}/commands/utils/*.js`)).map(async (commandFileMod) => {
-            const cmdMod = require(commandFileMod)
-            let embed = new MessageEmbed()
-            .setTitle("Commandes")
-            .setDescription(`Mon préfixe est ${prefix}, les SlashCommands sont activées !`)
-            .addFields(
-                { name: "Modération", value: `Mod`, inline: false },
-                { name: "Administration", value: `Admin`, inline: false },
-                { name: "Utiles", value: `${cmdMod.name}`, inline: false },
-                { name: "Jeux", value: `Jeux`, inline: false },
-                { name: "Musique", value: `Musique`, inline: false },
-                { name: "Configuration serveur", value: `conf`, inline: false }
-            )
-            message.channel.send(embed)
-        })
-        
+        let embedGoToSlashCommand = new MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle("Utilisation des Slash Commands")
+        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
+        .setTimestamp()
+        message.reply({embeds: [embedGoToSlashCommand]})        
     },
+    options: [
+        {
+            name: "commande",
+            description: "Nom de votre commande",
+            type: 'STRING',
+            required: false
+        }
+    ],
     runSlash: (client, commands) => {
-        (await pGlob(`${process.cwd()}/commands/utils/*.js`)).map(async (commandFileMod) => {
-            const cmdMod = require(commandFileMod)
-            let embed = new MessageEmbed()
-            .setTitle("Commandes")
-            .setDescription(`Mon préfixe est ${prefix}, les SlashCommands sont activées !`)
-            .addFields(
-                { name: "Modération", value: `Mod`, inline: false },
-                { name: "Administration", value: `Admin`, inline: false },
-                { name: "Utiles", value: `${cmdMod.name}`, inline: false },
-                { name: "Jeux", value: `Jeux`, inline: false },
-                { name: "Musique", value: `Musique`, inline: false },
-                { name: "Configuration serveur", value: `conf`, inline: false }
-            )
-        interaction.channel.send(embed)
-        })
+        const cmdName = interaction.options.getString("commande")
+        if(!cmdName){
+            const noAgrsEmbed = new MessageEmbed()
+            .setColor("RANDOM")
+            .setTitle("Commandes disponibles")
+            .setDescription("SI tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
+            .setTimestamp()
+            for (const category of commandFolder){
+                noAgrsEmbed.addField(`${category}`, `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`)
+            }
+            return interaction.reply({embeds: [embed]})
+        }
     }
-}        */
+}        

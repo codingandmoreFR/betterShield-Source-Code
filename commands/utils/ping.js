@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "ping",
     description: "Affiche la latence du bot",
+    category: 'utils',
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

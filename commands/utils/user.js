@@ -4,6 +4,7 @@ const dayjs = require("dayjs")
 module.exports = {
     name: "user",
     description: "Affiche les informations de l'utilisateur",
+    category: 'utils',
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

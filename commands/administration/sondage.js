@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "sondage",
     description: "Lancer un sondage",
+    category: 'admin',
     permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
