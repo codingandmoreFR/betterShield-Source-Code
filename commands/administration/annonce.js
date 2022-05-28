@@ -1,12 +1,12 @@
 const { MessageEmbed } = require("discord.js")
 
 module.exports = {
-    name: "sondage",
-    description: "Lancer un sondage",
+    name: "annonce",
+    description: "Lancer une annonce",
     category: 'administration',
     ownerOnly: false,
-    usage: 'sondage',
-    examples: ['sondage <channel> <titre> <contenu> <couleur>'],
+    usage: 'annonce',
+    examples: ['annonce <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
@@ -19,25 +19,25 @@ module.exports = {
     options: [
         {
             name: "channel",
-            description: "Salon où le sondage sera envoyé",
+            description: "Salon où l'annonce sera envoyé",
             type: 'CHANNEL',
             required: true
         },
         {
             name: "titre",
-            description: "Titre du sondage",
+            description: "Titre de l'annonce",
             type: 'STRING',
             required: true
         },
         {
             name: "contenu",
-            description: "Contenu du sondage",
+            description: "Contenu de l'annonce",
             type: "STRING",
             required: true
         },
         {
             name: "couleur",
-            description: "Couleur du sondage",
+            description: "Couleur de l'annonce",
             type: "STRING",
             required: true,
             choices: [
@@ -50,23 +50,32 @@ module.exports = {
                 { name: "violet", value: "PURPLE" }, 
                 { name: "aléatoire", value: "RANDOM" }
             ]
+        },
+        {
+            name: "role",
+            description: "Role à ping",
+            type: "ROLE",
+            required: false
         }
     ],
     runSlash: async (client, interaction) => {
         let channelID = interaction.options.getChannel("channel")
-        let titreSondage = interaction.options.getString("titre")
+        let titreAnnonce = interaction.options.getString("titre")
         let contenu = interaction.options.getString("contenu")
         let colorEmbed = interaction.options.getString("couleur")
+        let rolePing = interaction.options.getRole("role")
         let embed = new MessageEmbed()
         .setColor(colorEmbed)
-        .setTitle(titreSondage)
+        .setTitle(titreAnnonce)
         .setDescription(contenu)
-        .setFooter(`Par ${interaction.user.tag}`)
+        .setFooter({text: `Par ${interaction.user.tag}`})
         .setTimestamp()
-        const pool = await channelID.send({embeds: [embed], fetchReply: true})   
-        pool.react("<:plusdeux:973641602876702812>")  
-        pool.react("<:minus:973641600695689287>")
-        pool.react("<:nope:973641602725736588>")
-        interaction.reply({content: "Sondage envoyé !", ephemeral: "true"})            
+        if(!rolePing){
+            channelID.send({embeds: [embed]})
+            interaction.reply({content: "Annonce envoyée !", ephemeral: true})
+        }else{
+            channelID.send({content: `||${rolePing}||`, embeds: [embed]})
+            interaction.reply({content: "Annonce envoyée !", ephemeral: true})
+        }   
     }
 }

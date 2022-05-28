@@ -23,6 +23,18 @@ module.exports = async client => {
             return Logger.warn(`Commande non chargée : pas de catégorie\nFichier -> ${commandFile}`)
         }
 
+        if(cmd.ownerOnly === undefined){
+            return Logger.warn(`Commande non chargée : Indiquer si la commande est une owner only.\nFichier -> ${commandFile}`)
+        }
+
+        if(!cmd.usage){
+            return Logger.warn(`Commande non chargée : pas d'usage\nFichier -> ${commandFile}`)
+        }
+
+        if(!cmd.examples){
+            return Logger.warn(`Commande non chargée : pas d'exemple(s)\nFichier -> ${commandFile}`)
+        }
+
         cmd.permissions.forEach(permission => {
             if(!permissionList.includes(permission)){
                 return Logger.typo(`Commande non chargée : erreur de typo sur la permission '${permission}'.\n fichier -> ${cmdFile}`)
