@@ -33,8 +33,8 @@ module.exports = {
             .setTimestamp()
             for (const category of commandFolder){
                 noArgsEmbed.addField(
-                `${category.replace(/(^\w|\s\w)/g, firstLetter => firstLetter.toUpperCase())}`, 
-                `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`
+                `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())}`, 
+                `\`${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ') || "Aucune"}\``
                 )
             }
             return interaction.reply({embeds: [noArgsEmbed]})
