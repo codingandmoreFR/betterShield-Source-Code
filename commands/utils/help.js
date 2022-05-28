@@ -1,11 +1,17 @@
 const { MessageEmbed } = require("discord.js")
 const { readdirSync } = require("fs")
 const commandFolder = readdirSync("./commands")
+const contextDescription = {
+    userinfo: "Donne des infos sur l'utilisateur"
+}
 
 module.exports = {
     name: "help",
     description: "Affiche toutes les commandes du serveur",
     category: 'utils',
+    ownerOnly: false,
+    usage: 'help',
+    examples: ['help', 'help [commande]'],
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
@@ -25,6 +31,7 @@ module.exports = {
     ],
     runSlash: (client, interaction) => {
         const cmdName = interaction.options.getString("commande")
+        commandFile = []
         if(!cmdName){
             
             const noArgsEmbed = new MessageEmbed()
@@ -32,12 +39,16 @@ module.exports = {
             .setTitle("Commandes disponibles")
             .setDescription("Si tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
             .setTimestamp()
-            for (const category of commandFolder){
+            for (let category of commandFolder) {
+                let commandFile = []
+                for (let file of category) {
+                    commandFile.push(file.name)
+                }
                 noArgsEmbed.addField(
-                `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())}`, 
-                `\`${client.commands.filter(cmd => cmd.category == category).map(cmd => cmd.name).join(', ') || "Aucune"}\``
+                    `${category}`,
+                    `\`${commandFile.join(', ')}\``
                 )
-                console.log(client.commands.filter(cmd => cmd.category == category).map(cmd => cmd.name).join(', '))
+
             }
             return interaction.reply({embeds: [noArgsEmbed]})
         }
@@ -45,12 +56,34 @@ module.exports = {
         if(!cmd) return interaction.reply({content: 'Cette commande n\'existe pas !', ephemeral: true})
 
         const cmdPerm = cmd.permissions.join(", ") || "Aucune"
+        const cmdEx = cmd.examples.join(', /')
         const argsEmbed = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`\`${cmd.name}\``)
         .setDescription(cmd.description)
         .setTimestamp()
         .setFooter({text: `Permission(s) requise(s) : ${cmdPerm}`})
-        return interaction.reply({embeds: [argsEmbed]})
+        interaction.reply({embeds: [argsEmbed]})
+
+        interaction.channel.send(`
+\`\`\`makefile
+[Help: Commande => ${cmd.name}] ${cmd.ownerOnly ? "/!\\ Pour les administrateurs du bot seulement /!\\" : ""}
+
+${cmd.description ? cmd.description : contextDescription[`${cmd.name}`]}
+
+Utilisation : /${cmd.usage}
+Exemple(s) : ${cmdEx}
+Permission(s) nécéssaire(s) : ${cmdPerm}
+
+---
+
+/ = Slash Commande
+<> = options obligatoires
+[] = options facultatives
+{} = sous commande disponible
+
+Ne pas inclure ces caractères (<>, [] et {}) dans vos commandes.
+\`\`\`
+        `)
     }
 }        

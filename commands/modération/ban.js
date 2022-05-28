@@ -5,6 +5,9 @@ module.exports = {
     description: "ban un membre",
     category: 'mod',
     permissions: ["BAN_MEMBERS"],
+    ownerOnly: false,
+    usage: 'ban',
+    examples: ['ban <@mention>', 'ban <@mention> [temps]'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
         .setColor("RANDOM")

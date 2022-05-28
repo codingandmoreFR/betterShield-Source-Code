@@ -4,6 +4,9 @@ module.exports = {
     name: "sondage",
     description: "Lancer un sondage",
     category: 'admin',
+    ownerOnly: false,
+    usage: 'sondage',
+    examples: ['sonadge <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

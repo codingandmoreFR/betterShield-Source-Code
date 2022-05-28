@@ -11,6 +11,7 @@ dotenv.config()
 const client = new Client({ intents: 515 });
 const dayjs = require("dayjs")
 const chalk = require("chalk")
+const Logger = require("./utils/Logger")
 
 
 client.commands = new Collection()
@@ -18,10 +19,10 @@ client.commands = new Collection()
 const array = ["CommandUtil", "EventUtil"]
 array.forEach(handler => { require(`./utils/handlers/${handler}`)(client) })
 
-process.on('exit', code => { Logger.client(`----------\nProcessus arrêté.\nCode : ${code}\n----------`) })
-process.on("uncaughtException", (err, origin) => { Logger.error(`----------\nUncaugth Exception :\nErreur : ${err}\n-----\nOrigine : ${origin}\n----------`) })
-process.on("unhandledRejection", (reason, promise) => { Logger.warn(`----------\nUnhandled Rejection :\nRaison : ${reason}\n-----\nPromise : ${promise}\n----------`) })
-process.on("warning", (...args) => { Logger.warn(...args) })
+// process.on('exit', code => { Logger.client(`Processus arrêté.\nCode : ${code}`) })
+// process.on("uncaughtException", (err, origin) => { Logger.error(`Uncaugth Exception :\nErreur : ${err}\nOrigine : ${origin}`) })
+// process.on("unhandledRejection", (reason, promise) => { Logger.warn(`Unhandled Rejection :\nRaison : ${reason}\nPromise : ${promise}`) })
+// process.on("warning", (...args) => { Logger.warn(...args) })
 
 client.on("guildMemberAdd", (member) => {
     member.roles.add("978763926013616199")

@@ -4,6 +4,9 @@ module.exports = {
     name: "ping",
     description: "Affiche la latence du bot",
     category: 'utils',
+    ownerOnly: false,
+    usage: 'ping',
+    examples: ['ping'],
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

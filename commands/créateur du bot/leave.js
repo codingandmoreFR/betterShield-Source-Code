@@ -4,6 +4,9 @@ module.exports = {
     name: "leave",
     description: "Fait quitter le serveur",
     category: 'fonda',
+    ownerOnly: true,
+    usage: 'leave',
+    examples: ['leave'],
     permissions: [],
     run: (client, message, args) => {
         if(message.author.id === "698861684932214794"){

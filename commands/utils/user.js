@@ -5,6 +5,9 @@ module.exports = {
     name: "user",
     description: "Affiche les informations de l'utilisateur",
     category: 'utils',
+    ownerOnly: false,
+    usage: 'user',
+    examples: ['user', 'user [@mention]'],
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

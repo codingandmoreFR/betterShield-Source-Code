@@ -4,6 +4,9 @@ module.exports = {
     name: "invite",
     description: "Ajoute moi !",
     category: 'utils',
+    ownerOnly: false,
+    usage: 'invite',
+    examples: ['invite'],
     permissions: [],
     run: (client, message, args) => {
         let embed = new MessageEmbed()
