@@ -6,6 +6,10 @@ module.exports = {
     category: 'fonda',
     permissions: [],
     run: (client, message, args) => {
-        console.log("1.")
+        if(message.author.id === "698861684932214794"){
+            message.channel.send("Je quitte le serveur.").then(
+                message.guild.leave()
+            )
+        }
     }
 }
