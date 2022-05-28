@@ -7,8 +7,12 @@ module.exports = async client => {
     (await pGlob(`${process.cwd()}/events/*/*.js`)).map(async (eventFile) => {
         const event = require(eventFile)
 
-        if(!eventList.includes(event.name) || !event.name){
-            return Logger.warn(`-----\nEvenement non chargé : erreur de typo ou aucun nom.\n fichier -> ${eventFile}\n-----`)
+        if(!event.name){
+            return Logger.warn(`Evenement non chargé : aucun nom.\n fichier -> ${eventFile}`)
+        }
+
+        if(!eventList.includes(event.name)){
+            return Logger.typo(`Evenement non chargé : erreur de typo.\n fichier -> ${eventFile}`)
         }
 
         if(event.once){

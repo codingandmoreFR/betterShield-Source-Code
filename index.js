@@ -18,10 +18,10 @@ client.commands = new Collection()
 const array = ["CommandUtil", "EventUtil"]
 array.forEach(handler => { require(`./utils/handlers/${handler}`)(client) })
 
-// process.on('exit', code => { console.log(`----------\nProcessus arrêté.\nCode : ${code}\n----------`) })
-// process.on("uncaughtException", (err, origin) => { console.log(`----------\nUncaugth Exception :\nErreur : ${err}\n-----\nOrigine : ${origin}\n----------`) })
-// process.on("unhandledRejection", (reason, promise) => { console.log(`----------\nUnhandled Rejection :\nRaison : ${reason}\n-----\nPromise : ${promise}\n----------`) })
-// process.on("warning", (...args) => { console.log(...args) })
+process.on('exit', code => { Logger.client(`----------\nProcessus arrêté.\nCode : ${code}\n----------`) })
+process.on("uncaughtException", (err, origin) => { Logger.error(`----------\nUncaugth Exception :\nErreur : ${err}\n-----\nOrigine : ${origin}\n----------`) })
+process.on("unhandledRejection", (reason, promise) => { Logger.warn(`----------\nUnhandled Rejection :\nRaison : ${reason}\n-----\nPromise : ${promise}\n----------`) })
+process.on("warning", (...args) => { Logger.warn(...args) })
 
 client.on("guildMemberAdd", (member) => {
     member.roles.add("978763926013616199")
@@ -36,9 +36,9 @@ mongoose.connect(process.env.DATABASE_URI, {
     socketTimeoutMS: 45000,
     family: 4 
 }).then(() => {
-    console.log("Connection à la base de données réussie.")
+    Logger.client("- Connecté à la base de données.")
 }).catch(err => {
-    console.log("Erreur lors de la connection à la base de données :" + err)
+    Logger.warn("- Non connecté à la base de données." + err)
 })*/
 
 client.login(process.env.DISCORD_TOKEN)

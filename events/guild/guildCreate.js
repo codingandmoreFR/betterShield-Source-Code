@@ -1,10 +1,11 @@
 const { MessageEmbed } = require("discord.js")
+const Logger = require("../../utils/Logger")
 
 module.exports = {
     name: "guildCreate",
     once: false,
     async execute(client, guild){
-        console.log("on m'a ajouté à un serveur !")
+        Logger.autre("on m'a ajouté à un serveur !")
         let owner = await guild.fetchOwner();
         let embed = new MessageEmbed()
             .setTitle("Nouveau serveur !")

@@ -26,6 +26,7 @@ module.exports = {
     runSlash: (client, interaction) => {
         const cmdName = interaction.options.getString("commande")
         if(!cmdName){
+            
             const noArgsEmbed = new MessageEmbed()
             .setColor("RANDOM")
             .setTitle("Commandes disponibles")
@@ -34,8 +35,9 @@ module.exports = {
             for (const category of commandFolder){
                 noArgsEmbed.addField(
                 `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())}`, 
-                `\`${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ') || "Aucune"}\``
+                `\`${client.commands.filter(cmd => cmd.category == category).map(cmd => cmd.name).join(', ') || "Aucune"}\``
                 )
+                console.log(client.commands.filter(cmd => cmd.category == category).map(cmd => cmd.name).join(', '))
             }
             return interaction.reply({embeds: [noArgsEmbed]})
         }

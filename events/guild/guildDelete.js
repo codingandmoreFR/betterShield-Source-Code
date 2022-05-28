@@ -1,10 +1,11 @@
 const { MessageEmbed } = require("discord.js")
+const Logger = require("../../utils/Logger")
 
 module.exports = {
     name: "guildDelete",
     once: false,
     async execute(client, guild){
-        console.log("on m'a supprimé d'un serveur !")
+        Logger.autre("on m'a supprimé d'un serveur !")
         let owner = await guild.fetchOwner();
         let embed = new MessageEmbed()
             .setTitle("On m'a supprimé d'un serveur !")
