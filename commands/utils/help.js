@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js")
-const { prefix } = require("../../config/config.json")
 const { readdirSync } = require("fs")
 const commandFolder = readdirSync("./commands")
 
@@ -24,18 +23,30 @@ module.exports = {
             required: false
         }
     ],
-    runSlash: (client, commands) => {
+    runSlash: (client, interaction) => {
         const cmdName = interaction.options.getString("commande")
         if(!cmdName){
-            const noAgrsEmbed = new MessageEmbed()
+            const noArgsEmbed = new MessageEmbed()
             .setColor("RANDOM")
             .setTitle("Commandes disponibles")
-            .setDescription("SI tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
+            .setDescription("Si tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
             .setTimestamp()
             for (const category of commandFolder){
-                noAgrsEmbed.addField(`${category}`, `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`)
+                noArgsEmbed.addField(
+                `${category.replace(/(^\w|\s\w)/g, firstLetter => firstLetter.toUpperCase())}`, 
+                `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`)
             }
-            return interaction.reply({embeds: [embed]})
+            return interaction.reply({embeds: [noArgsEmbed]})
         }
+        const cmd = client.commands.get(cmdName)
+        if(!cmd) return interaction.reply({content: 'Cette commande n\'existe pas !', ephemeral: true})
+
+        const argsEmbed = new MessageEmbed()
+        .setColor("RANDOM")
+        .setTitle(`\`${cmd.name}\``)
+        .setDescription(cmd.description)
+        .setTimestamp()
+        .setFooter({text: `Permission(s) requise(s) : ${cmd.permissions.join(', ')}`})
+        return interaction.reply({embeds: [argsEmbed]})
     }
 }        

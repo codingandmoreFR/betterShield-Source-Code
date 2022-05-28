@@ -5,7 +5,7 @@ module.exports = {
     description: "Fait quitter le serveur",
     category: 'fonda',
     permissions: [],
-    run: async (client, message, args) => {
-        
+    run: (client, message, args) => {
+        console.log("1.")
     }
 }

@@ -16,10 +16,10 @@ client.commands = new Collection()
 const array = ["CommandUtil", "EventUtil"]
 array.forEach(handler => { require(`./utils/handlers/${handler}`)(client) })
 
-process.on('exit', code => { console.log(`----------\nProcessus arrêté.\nCode : ${code}\n----------`) })
-process.on("uncaughtException", (err, origin) => { console.log(`----------\nUncaugth Exception :\nErreur : ${err}\n-----\nOrigine : ${origin}\n----------`) })
-process.on("unhandledRejection", (reason, promise) => { console.log(`----------\nUnhandled Rejection :\nRaison : ${reason}\n-----\nPromise : ${promise}\n----------`) })
-process.on("warning", (...args) => { console.log(...args) })
+// process.on('exit', code => { console.log(`----------\nProcessus arrêté.\nCode : ${code}\n----------`) })
+// process.on("uncaughtException", (err, origin) => { console.log(`----------\nUncaugth Exception :\nErreur : ${err}\n-----\nOrigine : ${origin}\n----------`) })
+// process.on("unhandledRejection", (reason, promise) => { console.log(`----------\nUnhandled Rejection :\nRaison : ${reason}\n-----\nPromise : ${promise}\n----------`) })
+// process.on("warning", (...args) => { console.log(...args) })
 
 client.on("guildMemberAdd", (member) => {
     member.roles.add("978763926013616199")
