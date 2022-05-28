@@ -1,6 +1,7 @@
-const { timeStamp } = require("console")
 const { MessageEmbed } = require("discord.js")
 const { readdirSync } = require("fs")
+const dayjs = require("dayjs")
+
 const contextDescription = {
     userinfo: "Donne des infos sur l'utilisateur"
 }
@@ -32,7 +33,7 @@ module.exports = {
     runSlash: (client, interaction) => {
         const commandFolder = [];
         client.commands.forEach(cmd => {
-            if (! commandFolder.includes(cmd.category)) commandFolder.push(cmd.catergory)
+            if (! commandFolder.includes(cmd.category)) commandFolder.push(cmd.category)
         })
         const cmdName = interaction.options.getString("commande")
         if(!cmdName){
@@ -55,7 +56,7 @@ module.exports = {
 
         const cmdPerm = cmd.permissions.join(", ") || "Aucune"
         const cmdEx = cmd.examples.join(', /')
-        const time = timeStamp()
+        const time = dayjs().format('DD/MM - HH:mm:ss')
         interaction.reply(`
 \`\`\`makefile
 [Help: Commande => ${cmd.name}] ${cmd.ownerOnly ? "/!\\ Pour les administrateurs du bot seulement /!\\" : ""}
