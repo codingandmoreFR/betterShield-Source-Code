@@ -34,7 +34,8 @@ module.exports = {
             for (const category of commandFolder){
                 noArgsEmbed.addField(
                 `${category.replace(/(^\w|\s\w)/g, firstLetter => firstLetter.toUpperCase())}`, 
-                `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`)
+                `${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ')}`
+                )
             }
             return interaction.reply({embeds: [noArgsEmbed]})
         }
