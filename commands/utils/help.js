@@ -42,12 +42,13 @@ module.exports = {
         const cmd = client.commands.get(cmdName)
         if(!cmd) return interaction.reply({content: 'Cette commande n\'existe pas !', ephemeral: true})
 
+        const cmdPerm = cmd.permissions.join(", ") || "Aucune"
         const argsEmbed = new MessageEmbed()
         .setColor("RANDOM")
         .setTitle(`\`${cmd.name}\``)
         .setDescription(cmd.description)
         .setTimestamp()
-        .setFooter({text: `Permission(s) requise(s) : ${cmd.permissions.join(', ')}`})
+        .setFooter({text: `Permission(s) requise(s) : ${cmdPerm}`})
         return interaction.reply({embeds: [argsEmbed]})
     }
 }        

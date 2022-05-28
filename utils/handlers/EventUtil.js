@@ -1,23 +1,23 @@
 const { promisify } = require("util");
 const { glob } = require("glob");
-const { CachedManager } = require("discord.js");
 const pGlob = promisify(glob);
+const Logger = require("../Logger")
 
 module.exports = async client => {
     (await pGlob(`${process.cwd()}/events/*/*.js`)).map(async (eventFile) => {
         const event = require(eventFile)
 
         if(!eventList.includes(event.name) || !event.name){
-            return console.log(`-----\nEvenement non chargé : erreur de typo ou aucun nom.\n fichier -> ${eventFile}\n-----`)
+            return Logger.warn(`-----\nEvenement non chargé : erreur de typo ou aucun nom.\n fichier -> ${eventFile}\n-----`)
         }
 
         if(event.once){
             client.once(event.name, (...args) => event.execute(client, ...args))
         }else{
             client.on(event.name, (...args) => event.execute(client, ...args))
-        }
+            }
 
-        console.log(`Evenement chargé : ${event.name}`)
+        Logger.event(`Evenement chargé : ${event.name}`)
     })
 }
 

@@ -10,6 +10,8 @@ const mongoose = require("mongoose")
 dotenv.config()
 const client = new Client({ intents: 515 });
 const dayjs = require("dayjs")
+const chalk = require("chalk")
+
 
 client.commands = new Collection()
 

@@ -1,27 +1,36 @@
 const { promisify } = require("util");
 const { glob } = require("glob");
 const pGlob = promisify(glob);
+const Logger = require("../Logger")
 
 module.exports = async client => {
     (await pGlob(`${process.cwd()}/commands/*/*.js`)).map(async (commandFile) => {
         const cmd = require(commandFile)
 
-        if(!cmd.name || !cmd.description || !cmd.permissions){
-            return console.log(`-----\nCommande non chargée : pas de nom et/ou description et/ou permission\nFichier -> ${commandFile}\n-----`)
+        if(!cmd.name){
+            return Logger.warn(`Commande non chargée : pas de nom.\nFichier -> ${commandFile}`)
+        }
+
+        if(!cmd.description){
+            return Logger.warn(`Commande non chargée : pas de description.\nFichier -> ${commandFile}`)
+        }
+        
+        if(!cmd.permissions){
+            return Logger.warn(`Commande non chargée : pas de permissions.\nFichier -> ${commandFile}`)
         }
 
         if(!cmd.category){
-            return console.log(`-----\nCommande non chargée : pas de catégorie\nFichier -> ${commandFile}\n-----`)
+            return Logger.warn(`Commande non chargée : pas de catégorie\nFichier -> ${commandFile}`)
         }
 
         cmd.permissions.forEach(permission => {
             if(!permissionList.includes(permission)){
-                return console.log(`-----\nCommande non chargé : erreur de typo sur la permission '${permission}'.\n fichier -> ${cmdFile}\n-----`)
+                return Logger.typo(`Commande non chargée : erreur de typo sur la permission '${permission}'.\n fichier -> ${cmdFile}`)
             }
         })
 
         client.commands.set(cmd.name, cmd)
-        console.log(`Commande chargée : ${cmd.name}`)
+        Logger.command(`- ${cmd.name}`)
     })
 }
 
