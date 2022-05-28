@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js')
 module.exports = {
     name: "ban",
     description: "ban un membre",
-    category: 'mod',
+    category: 'modération',
     permissions: ["BAN_MEMBERS"],
     ownerOnly: false,
     usage: 'ban',

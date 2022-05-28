@@ -4,7 +4,7 @@ const dayjs = require("dayjs")
 module.exports = {
     name: "user",
     description: "Affiche les informations de l'utilisateur",
-    category: 'utils',
+    category: 'utiles',
     ownerOnly: false,
     usage: 'user',
     examples: ['user', 'user [@mention]'],

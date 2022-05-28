@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "invite",
     description: "Ajoute moi !",
-    category: 'utils',
+    category: 'utiles',
     ownerOnly: false,
     usage: 'invite',
     examples: ['invite'],

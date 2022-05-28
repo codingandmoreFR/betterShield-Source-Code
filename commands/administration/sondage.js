@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "sondage",
     description: "Lancer un sondage",
-    category: 'admin',
+    category: 'administration',
     ownerOnly: false,
     usage: 'sondage',
     examples: ['sonadge <channel> <titre> <contenu> <couleur>'],

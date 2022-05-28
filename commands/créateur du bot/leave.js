@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "leave",
     description: "Fait quitter le serveur",
-    category: 'fonda',
+    category: 'fondateur du bot',
     ownerOnly: true,
     usage: 'leave',
     examples: ['leave'],

@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 module.exports = {
     name: "ping",
     description: "Affiche la latence du bot",
-    category: 'utils',
+    category: 'utiles',
     ownerOnly: false,
     usage: 'ping',
     examples: ['ping'],
