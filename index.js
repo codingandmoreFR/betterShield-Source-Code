@@ -29,7 +29,7 @@ client.on("guildMemberAdd", (member) => {
 })
 
 
-/*
+
 mongoose.connect(process.env.DATABASE_URI, {
     autoIndex: false,
     maxPoolSize: 10,
@@ -40,6 +40,6 @@ mongoose.connect(process.env.DATABASE_URI, {
     Logger.client("- Connecté à la base de données.")
 }).catch(err => {
     Logger.warn("- Non connecté à la base de données." + err)
-})*/
+})
 
 client.login(process.env.DISCORD_TOKEN)

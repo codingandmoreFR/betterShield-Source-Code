@@ -20,7 +20,6 @@ module.exports = {
             description: "Nom de votre commande",
             type: 'STRING',
             required: false,
-            autocomplete: true
         }
     ],
     autocomplete: (interaction, query) => {
