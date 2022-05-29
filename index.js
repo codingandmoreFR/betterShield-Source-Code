@@ -8,7 +8,7 @@ const { noir, blanc } = require("./config/colors.json")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
 dotenv.config()
-const client = new Client({ intents: 515 });
+const client = new Client({ intents: 32767 });
 const dayjs = require("dayjs")
 const chalk = require("chalk")
 const Logger = require("./utils/Logger")
