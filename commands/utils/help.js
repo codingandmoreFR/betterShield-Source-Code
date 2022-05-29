@@ -14,21 +14,12 @@ module.exports = {
     usage: 'help [commande]',
     examples: ['help', 'help [commande]'],
     permissions: [],
-    run: (client, message, args) => {
-        let embedGoToSlashCommand = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("Utilisation des Slash Commands")
-        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
-        .setTimestamp()
-        message.reply({embeds: [embedGoToSlashCommand]})        
-    },
     options: [
         {
             name: "commande",
             description: "Nom de votre commande",
             type: 'STRING',
             required: false,
-            autocomplete: true
         }
     ],
     autocomplete: (interaction, query) => {
@@ -36,7 +27,7 @@ module.exports = {
         interaction.client.commands.forEach(command => {
             if (choices.length < 25 && command.name.includes(query.toLowerCase())) choices.push({
                 name: command.name,
-                value: command.value
+                value: command.name
             });
         });
         interaction.respond(choices);

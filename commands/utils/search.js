@@ -8,15 +8,6 @@ module.exports = {
     usage: 'search <recherche>', //nom de la commande
     examples: ['search <recherche>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
     permissions: [], //permissions comme par exemple ADMINISTRATOR
-    run: (client, message, args) => {
-        let embedGoToSlashCommand = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("Utilisation des Slash Commands")
-        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
-        .setTimestamp()
-        message.reply({embeds: [embedGoToSlashCommand]})        
-    },
-
     options: [
         {
             name: "recherche",

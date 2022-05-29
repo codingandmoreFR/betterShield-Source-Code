@@ -4,10 +4,10 @@ module.exports = {
     name: "pseudo", //nom de la commande / affichée sur l'embed d'aide
     description: "Changer son pseudo", //description affichée sur l'embed d'aide
     category: 'utiles', //utiles || modération || fondateur du bot || administration
-    ownerOnly: false,
-    usage: 'pseudo', //nom de la commande
-    examples: ['pseudo <Nouveau pseudonyme>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
-    permissions: [], //permissions comme par exemple ADMINISTRATOR
+    ownerOnly: false, 
+    usage: 'pseudo <nouveau pseudonyme>', //nom de la commande
+    examples: ['pseudo <nouveau pseudonyme>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
+    permissions: ['CHANGE_NICKNAME'], //permissions comme par exemple ADMINISTRATOR
 
     options: [
         {
