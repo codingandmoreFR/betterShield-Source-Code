@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = {
     name: "clear",
-    description: "Supprime des messages",
+    description: "Supprime des messages - si aucun nombre est mentionné, le bot supprimera 100 messages.",
     category: 'modération',
     permissions: ["MANAGE_MESSAGES"],
     ownerOnly: false,
@@ -32,14 +32,13 @@ module.exports = {
     ],
 
     runSlash: async (client, interaction) => {
-        await interaction.deferReply();
         const nombre = interaction.options.getNumber("nombre") || "100"
         const membre = interaction.options.getUser("user")
         if(nombre > 100 || nombre <= 0) return interaction.editReply({content: 'Le nombre doit être supérieur à 0 et inférieur à 100 !'})
         const messagesToDel = interaction.channel.messages.fetch()
         if(membre){
             let i = 0
-            const filterMembreMess = []
+            const filterMembreMess = [];
             (await messagesToDel).filter(msg => {
                 if(msg.author.id == membre.id && nombre > i){
                     filterMembreMess.push(msg); i++
@@ -48,11 +47,11 @@ module.exports = {
             })
 
             await interaction.channel.bulkDelete(filterMembreMess, true).then(async messages => {
-                await interaction.editReply(`J'ai supprimé ${nombre} messages sur l'utilisateur ${membre}.`)
+                await interaction.reply({content: `J'ai supprimé ${nombre} messages sur l'utilisateur ${membre}.`, ephemeral: true})
             })
         }else{
             await interaction.channel.bulkDelete(nombre, true).then(async messages => {
-                await interaction.editReply(`J'ai supprimé ${nombre} messages.`)
+                await interaction.reply({content: `J'ai supprimé ${nombre} messages.`, ephemeral: true})
             })
         }
     }
