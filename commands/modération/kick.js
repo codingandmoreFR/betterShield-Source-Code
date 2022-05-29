@@ -48,14 +48,16 @@ module.exports = {
 
         if (!member.kickable) return await interaction.editReply({ embeds: [embedNotKick], ephemeral: true })
 
-        if (!raison) raison = "Aucune";
         let embedKick = new MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`Expulsion`)
             .setDescription(`${interaction.user.tag} à expulsé ${member.user.tag}.\nRaison : ${raison}`)
             .setTimestamp()
-
-        await member.kick(({reason: raison }))
+        if(raison){
+            await member.kick({reason: raison})
+        }else{
+            await member.kick()
+        }
         await interaction.editReply({ embeds: [embedKick] })
     }
 
