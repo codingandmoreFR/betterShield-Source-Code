@@ -4,7 +4,7 @@ module.exports = {
     name: "pseudo", //nom de la commande / affichée sur l'embed d'aide
     description: "Changer son pseudo", //description affichée sur l'embed d'aide
     category: 'utiles', //utiles || modération || fondateur du bot || administration
-    ownerOnly: false, 
+    ownerOnly: false,
     usage: 'pseudo', //nom de la commande
     examples: ['pseudo <Nouveau pseudonyme>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
     permissions: [], //permissions comme par exemple ADMINISTRATOR
@@ -20,30 +20,34 @@ module.exports = {
 
     runSlash: async (client, interaction) => {
         //response
-        await interaction.deferReply();
+        await interaction.deferReply()({ ephemeral: true });
 
         //vérif
+        let verify = true
         let botrole = interaction.guild.roles.cache.find(bot => bot.name === "betterShield")
-        interaction.member.roles.cache.forEach(role => {
-                if(role > botrole){
-                    return interaction.reply({ content : "❌Le bot doit avoir un role supérieur au votre pour modifier votre pseudo !❌ ", ephemeral : true})
-                }
-        });
+        await interaction.member.roles.cache.forEach(role => {
+            if (role.position > botrole.position) {
+                verify = false;
+                return interaction.editReply({ content: "❌Le bot doit avoir un role supérieur au votre pour modifier votre pseudo !❌ ", ephemeral: true });
+            }
+        })
+
+        if(verify === false) return;
 
         //init var
         const newNickName = interaction.options.getString('pseudo');
-        if(newNickName.length > 32) return interaction.reply({ content : "❌Votre nouveau pseudo est trop long ! (Supérieur à 32 caractères)❌ ", ephemeral : true})
+        if (newNickName.length > 32) return interaction.editReply({ content: "❌Votre nouveau pseudo est trop long ! (Supérieur à 32 caractères)❌ ",ephemeral: true });
         let OldNickName = interaction.member.nickname || interaction.user.tag;
         await interaction.member.setNickname(newNickName).catch(console.error())
         //create embed
         let embedPseudo = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle(`${interaction.user.tag} changement réussi ✅`)
-        .setDescription(`${OldNickName} ▶ ${newNickName}`)
-        .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic : true}) })
-        .setTimestamp()
+            .setColor("RANDOM")
+            .setTitle(`${interaction.user.tag} changement réussi ✅`)
+            .setDescription(`${OldNickName} => ${newNickName}`)
+            .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+            .setTimestamp()
 
         //send
-        interaction.editReply({embeds: [embedPseudo]})
+        interaction.editReply({ embeds: [embedPseudo] });
     }
 }
