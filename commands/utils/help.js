@@ -11,7 +11,7 @@ module.exports = {
     description: "Affiche toutes les commandes du serveur",
     category: 'utiles',
     ownerOnly: false,
-    usage: 'help',
+    usage: 'help [commande]',
     examples: ['help', 'help [commande]'],
     permissions: [],
     run: (client, message, args) => {
@@ -30,7 +30,8 @@ module.exports = {
             required: false
         }
     ],
-    runSlash: (client, interaction) => {
+    runSlash: async(client, interaction) => {
+        await interaction.deferReply();
         const commandFolder = [];
         client.commands.forEach(cmd => {
             if (! commandFolder.includes(cmd.category)) commandFolder.push(cmd.category)
@@ -49,15 +50,15 @@ module.exports = {
                 `\`${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ') || "Aucune"}\``
                 )
             }
-            return interaction.reply({embeds: [noArgsEmbed]})
+            return await interaction.editReply({embeds: [noArgsEmbed]})
         }
         const cmd = client.commands.get(cmdName)
-        if(!cmd) return interaction.reply({content: 'Cette commande n\'existe pas !', ephemeral: true})
+        if(!cmd) return await interaction.editReply({content: 'Cette commande n\'existe pas !', ephemeral: true})
 
         const cmdPerm = cmd.permissions.join(", ") || "Aucune"
         const cmdEx = cmd.examples.join(', /')
         const time = dayjs().format('DD/MM - HH:mm:ss')
-        interaction.reply(`
+        await interaction.editReply(`
 \`\`\`makefile
 [Help: Commande => ${cmd.name}] ${cmd.ownerOnly ? "/!\\ Pour les administrateurs du bot seulement /!\\" : ""}
 

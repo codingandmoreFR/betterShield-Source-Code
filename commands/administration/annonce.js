@@ -5,7 +5,7 @@ module.exports = {
     description: "Lancer une annonce",
     category: 'administration',
     ownerOnly: false,
-    usage: 'annonce',
+    usage: 'annonce <channel> <titre> <contenu> <couleur>',
     examples: ['annonce <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
@@ -64,6 +64,7 @@ module.exports = {
         let contenu = interaction.options.getString("contenu")
         let colorEmbed = interaction.options.getString("couleur")
         let rolePing = interaction.options.getRole("role")
+        await interaction.deferReply();
         let embed = new MessageEmbed()
         .setColor(colorEmbed)
         .setTitle(titreAnnonce)
@@ -72,10 +73,10 @@ module.exports = {
         .setTimestamp()
         if(!rolePing){
             channelID.send({embeds: [embed]})
-            interaction.reply({content: "Annonce envoyée !", ephemeral: true})
+            await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
         }else{
             channelID.send({content: `||${rolePing}||`, embeds: [embed]})
-            interaction.reply({content: "Annonce envoyée !", ephemeral: true})
+            await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
         }   
     }
 }

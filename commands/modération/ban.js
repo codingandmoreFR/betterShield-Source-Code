@@ -6,7 +6,7 @@ module.exports = {
     category: 'modération',
     permissions: ["BAN_MEMBERS"],
     ownerOnly: false,
-    usage: 'ban',
+    usage: 'ban <@mention> [temps]',
     examples: ['ban <@mention>', 'ban <@mention> [temps]'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

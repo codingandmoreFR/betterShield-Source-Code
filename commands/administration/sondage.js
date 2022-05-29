@@ -5,7 +5,7 @@ module.exports = {
     description: "Lancer un sondage",
     category: 'administration',
     ownerOnly: false,
-    usage: 'sondage',
+    usage: 'sondage <channel> <titre> <contenu> <couleur>',
     examples: ['sondage <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
     run: (client, message, args) => {
@@ -57,6 +57,7 @@ module.exports = {
         let titreSondage = interaction.options.getString("titre")
         let contenu = interaction.options.getString("contenu")
         let colorEmbed = interaction.options.getString("couleur")
+        await interaction.deferReply();
         let embed = new MessageEmbed()
         .setColor(colorEmbed)
         .setTitle(titreSondage)
@@ -67,6 +68,6 @@ module.exports = {
         pool.react("<:plusdeux:973641602876702812>")  
         pool.react("<:minus:973641600695689287>")
         pool.react("<:nope:973641602725736588>")
-        interaction.reply({content: "Sondage envoyé !", ephemeral: "true"})            
+        await interaction.editReply({content: "Sondage envoyé !", ephemeral: "true"})            
     }
 }

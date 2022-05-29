@@ -6,7 +6,7 @@ module.exports = {
     description: "Affiche les informations de l'utilisateur",
     category: 'utiles',
     ownerOnly: false,
-    usage: 'user',
+    usage: 'user [@mention]',
     examples: ['user', 'user [@mention]'],
     permissions: [],
     run: (client, message, args) => {
@@ -27,8 +27,9 @@ module.exports = {
         }
     ],
 
-    runSlash: (client, interaction) => {
+    runSlash: async (client, interaction) => {
         const member = interaction.options.getMember('membre') || interaction.member;
+        await interaction.deferReply();
         let createdDate = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime)
         let RelativeCreatedDate = Formatters.time(dayjs(member.user.createdTimestamp).unix(), Formatters.TimestampStyles.RelativeTime)
         let joinDate = Formatters.time(dayjs(member.joinedTimestamp).unix(), Formatters.TimestampStyles.ShortDateTime)
@@ -44,6 +45,6 @@ module.exports = {
             { name: "Rejoint le", value: `${joinDate} (${RelativeJoinDate})`, inline: true }
         )
         .setTimestamp()
-        interaction.reply({embeds: [embed]}) 
+        await interaction.editReply({embeds: [embed]}) 
     }
 }

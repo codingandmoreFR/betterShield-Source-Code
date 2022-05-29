@@ -6,7 +6,7 @@ module.exports = {
     category: 'modération',
     permissions: ["KICK_MEMBERS"],
     ownerOnly: false,
-    usage: 'kick',
+    usage: 'kick <@mention>',
     examples: ['kick <@mention>'],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()

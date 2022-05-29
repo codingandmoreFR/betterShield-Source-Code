@@ -1,12 +1,12 @@
 const { MessageEmbed } = require("discord.js")
 
 module.exports = {
-    name: "ping",
-    description: "Affiche la latence du bot",
-    category: 'utiles',
+    name: "report",
+    description: "Signale un problème à l'équipe de développement du bot",
+    category: 'assistance',
     ownerOnly: false,
-    usage: 'ping',
-    examples: ['ping'],
+    usage: 'report <problème>',
+    examples: ['report <problème>'],
     permissions: [],
     run: (client, message, args) => {
         let embedGoToSlashCommand = new MessageEmbed()
@@ -16,18 +16,20 @@ module.exports = {
         .setTimestamp()
         message.reply({embeds: [embedGoToSlashCommand]})
     },
+    options: [
+        {
+            name: "signalement",
+            description: "Signale le problème que tu as",
+            type: 'STRING',
+            required: 'true'
+        }
+    ],
     runSlash: async (client, interaction) => {
         await interaction.deferReply();
-        let ping = client.ws.ping
+        let contenu = interaction.options.getString("signalement")
         let embed = new MessageEmbed()
-        .setColor('RED')
-        .setTitle("Ping")
-        .addFields(
-            { name: "Latence", value: `\`\`\`${ping}ms\`\`\``, inline: false },
-            { name: "Démarré", value: `<t:${parseInt(client.readyTimestamp / 1000)}:R>`, inline: false}
-        )
-        .setTimestamp()
-        .setFooter({text: interaction.user.username, iconURL: interaction.user.displayAvatarURL()})
+        .setColor("RANDOM")
+        .setAuthor({text: `${interaction.user.tag}, ${interaction.user.id}`})
         await interaction.editReply({embeds : [embed]})
     }
 }

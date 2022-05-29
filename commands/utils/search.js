@@ -5,7 +5,7 @@ module.exports = {
     description: "Recherche sur internet", //description affichée sur l'embed d'aide
     category: 'utiles', //utiles || modération || fondateur du bot || administration
     ownerOnly: false, 
-    usage: 'search', //nom de la commande
+    usage: 'search <recherche>', //nom de la commande
     examples: ['search <recherche>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
     permissions: [], //permissions comme par exemple ADMINISTRATOR
     run: (client, message, args) => {
@@ -36,6 +36,6 @@ module.exports = {
         .setDescription(`https://www.google.fr/search?q=${args}`)
         .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic : true}) })
         .setTimestamp()
-        interaction.editReply({embeds: [embedSearch]})
+        await interaction.editReply({embeds: [embedSearch]})
     }
 }
