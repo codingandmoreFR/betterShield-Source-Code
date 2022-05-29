@@ -19,9 +19,20 @@ module.exports = {
             name: "commande",
             description: "Nom de votre commande",
             type: 'STRING',
-            required: false
+            required: false,
+            autocomplete: true
         }
     ],
+    autocomplete: (interaction, query) => {
+        const choices = [];
+        interaction.client.commands.forEach(command => {
+            if (choices.length < 25 && command.name.includes(query.toLowerCase())) choices.push({
+                name: command.name,
+                value: command.name
+            });
+        });
+        interaction.respond(choices);
+    },
     runSlash: async(client, interaction) => {
         await interaction.deferReply();
         const commandFolder = [];
