@@ -36,7 +36,7 @@ module.exports = {
         interaction.client.commands.forEach(command => {
             if (choices.length < 25 && command.name.includes(query.toLowerCase())) choices.push({
                 name: command.name,
-                value: command.value
+                value: command.name
             });
         });
         interaction.respond(choices);
