@@ -8,14 +8,6 @@ module.exports = {
     usage: 'report <problème>',
     examples: ['report <problème>'],
     permissions: [],
-    run: (client, message, args) => {
-        let embedGoToSlashCommand = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("Utilisation des Slash Commands")
-        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
-        .setTimestamp()
-        message.reply({embeds: [embedGoToSlashCommand]})
-    },
     options: [
         {
             name: "signalement",
@@ -30,6 +22,8 @@ module.exports = {
         let embed = new MessageEmbed()
         .setColor("RANDOM")
         .setAuthor({text: `${interaction.user.tag}, ${interaction.user.id}`})
+        .setDescription(contenu)
+        .setTimestamp()
         await interaction.editReply({embeds : [embed]})
     }
 }

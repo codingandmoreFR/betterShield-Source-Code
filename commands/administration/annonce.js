@@ -8,14 +8,6 @@ module.exports = {
     usage: 'annonce <channel> <titre> <contenu> <couleur>',
     examples: ['annonce <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
-    run: (client, message, args) => {
-        let embedGoToSlashCommand = new MessageEmbed()
-        .setColor("RANDOM")
-        .setTitle("Utilisation des Slash Commands")
-        .setDescription("Hey, je t'invite à utiliser les slash commands ! C'est plus facile pour moi de comprendre et ça te permet d'avoir plus de facilité lors de l'execution des commandes !")
-        .setTimestamp()
-        message.reply({embeds: [embedGoToSlashCommand]})
-    },
     options: [
         {
             name: "channel",
