@@ -62,12 +62,13 @@ module.exports = {
         .setColor(colorEmbed)
         .setTitle(titreSondage)
         .setDescription(contenu)
-        .setFooter(`Par ${interaction.user.tag}`)
+        .setFooter({text: `Par ${interaction.user.tag}`})
         .setTimestamp()
         const pool = await channelID.send({embeds: [embed], fetchReply: true})   
         pool.react("<:plusdeux:973641602876702812>")  
         pool.react("<:minus:973641600695689287>")
         pool.react("<:nope:973641602725736588>")
+        if (!channelID.isText()) return interaction.reply({ content : 'Vous devez sélectionner un channel Text ! ', ephemeral : true})
         await interaction.editReply({content: "Sondage envoyé !", ephemeral: "true"})            
     }
 }

@@ -1,4 +1,5 @@
 const { Message } = require("discord.js");
+const ownerID = ['698861684932214794', '604731411223674901', '596273686290497546', '852674430143430677'];
 
 module.exports = {
     name: "interactionCreate",
