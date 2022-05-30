@@ -28,14 +28,14 @@ module.exports = {
         //init var
         const newNickName = interaction.options.getString('pseudo');
         if (newNickName.length > 32) return interaction.editReply({ content: "❌Votre nouveau pseudo est trop long ! (Supérieur à 32 caractères)❌ ",ephemeral: true });
-        let OldNickName = interaction.member.nickname || interaction.user.tag;
+        let OldNickName = interaction.member.nickname || interaction.user.username;
         await interaction.member.setNickname(newNickName).catch(console.error())
         //create embed
         let embedPseudo = new MessageEmbed()
             .setColor("RANDOM")
-            .setTitle(`${interaction.user.tag} changement réussi ✅`)
-            .setDescription(`${OldNickName} => ${newNickName}`)
-            .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+            .setTitle(`<a:above:973641634216546306> Changement réussi :`)
+            .setDescription(`${OldNickName} <a:arrowok:973641633524506624>  ${newNickName}`)
+            .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
 
         //send
