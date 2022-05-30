@@ -56,8 +56,8 @@ module.exports = {
         interaction.respond(choices);
     },
     runSlash: async (client, interaction) => {
-        let channelID = interaction.guild.channels.cache.get(interaction.options.getString("channel"));
-        if (!channelID) interaction.reply({ ephemeral: true, content: "Channel invalide." });
+        let channel = interaction.guild.channels.cache.get(interaction.options.getString("channel"));
+        if (!channel) interaction.reply({ ephemeral: true, content: "Channel invalide." });
         let titreSondage = interaction.options.getString("titre");
         let contenu = interaction.options.getString("contenu");
         let colorEmbed = interaction.options.getString("couleur");
@@ -68,11 +68,11 @@ module.exports = {
         .setDescription(contenu)
         .setFooter({text: `Par ${interaction.user.tag}`})
         .setTimestamp()
-        const pool = await channelID.send({embeds: [embed], fetchReply: true})   
+        const pool = await channel.send({embeds: [embed], fetchReply: true})   
         pool.react("<:plusdeux:973641602876702812>")  
         pool.react("<:minus:973641600695689287>")
         pool.react("<:nope:973641602725736588>")
-        if (!channelID.isText()) return interaction.reply({ content : 'Vous devez sélectionner un channel Text ! ', ephemeral : true})
+        if (!channel.isText()) return interaction.reply({ content : 'Vous devez sélectionner un channel Text ! ', ephemeral : true})
         await interaction.editReply({content: "Sondage envoyé !", ephemeral: "true"})            
     }
 }
