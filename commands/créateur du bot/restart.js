@@ -17,7 +17,7 @@ module.exports = {
             .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
 
-        await interaction.editReply({ content: 'Redémarrage <a:waiting:980891125478985758> ' })
+        await interaction.reply({ content: 'Redémarrage <a:waiting:980891125478985758> ' })
             .then(() => client.destroy())
             .then(() => client.login(`${process.env.DISCORD_TOKEN}`))
             .then(() => interaction.editReply({ content: " ", embeds: [embed] }));
