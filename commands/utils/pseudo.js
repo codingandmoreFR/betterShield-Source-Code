@@ -42,3 +42,4 @@ module.exports = {
         interaction.editReply({ embeds: [embedPseudo] });
     }
 }
+
