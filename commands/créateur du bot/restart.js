@@ -5,10 +5,10 @@ module.exports = {
     name: "restart",
     description: "restart le bot",
     category: 'fondateur du bot',
-    permissions: ["ADMINISTRATOR"],
+    permissions: [],
     ownerOnly: true,
-    usage: 'kick <@mention>',
-    examples: ['kick <@mention>'],
+    usage: 'restart',
+    examples: ['restart'],
 
     runSlash: async (client, interaction) => {
         let embed = new MessageEmbed()
