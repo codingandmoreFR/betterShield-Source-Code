@@ -20,7 +20,7 @@ module.exports = {
 
     runSlash: async (client, interaction) => {
         //response
-        await interaction.deferReply()({ ephemeral: true });
+        await interaction.deferReply();
 
         //vérif
         if (interaction.guild.me.roles.highest.position <= interaction.member.roles.highest.position) return interaction.editReply({ content: "❌Le bot doit avoir un role supérieur au votre pour modifier votre pseudo !❌ ", ephemeral: true });
