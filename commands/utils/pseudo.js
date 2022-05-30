@@ -23,16 +23,7 @@ module.exports = {
         await interaction.deferReply()({ ephemeral: true });
 
         //vérif
-        let verify = true
-        let botrole = interaction.guild.roles.cache.find(bot => bot.name === "betterShield")
-        await interaction.member.roles.cache.forEach(role => {
-            if (role.position > botrole.position) {
-                verify = false;
-                return interaction.editReply({ content: "❌Le bot doit avoir un role supérieur au votre pour modifier votre pseudo !❌ ", ephemeral: true });
-            }
-        })
-
-        if(verify === false) return;
+        if (interaction.guild.me.roles.highest.position <= interaction.member.roles.highest.position) return interaction.editReply({ content: "❌Le bot doit avoir un role supérieur au votre pour modifier votre pseudo !❌ ", ephemeral: true });
 
         //init var
         const newNickName = interaction.options.getString('pseudo');
