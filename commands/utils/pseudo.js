@@ -38,6 +38,7 @@ module.exports = {
             .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
 
+            
         //send
         interaction.editReply({ embeds: [embedPseudo] });
     }
