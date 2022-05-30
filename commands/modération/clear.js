@@ -13,13 +13,15 @@ module.exports = {
             name: "nombre",
             description: "Nombres de messages à supprimer - défaut : 100",
             type: 'NUMBER',
-            required: 'false'
+            required: false,
+            min_value: 1,
+            max_value: 100
         },
         {
             name: "user",
             description: "Membre à qui on va supprimer ses messages",
             type: 'USER',
-            required: 'false'
+            required: false
         }
     ],
 
