@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js")
+const { Guild } = require("../../models/indexMongo")
 
 module.exports = {
     name: "annonce",
@@ -69,6 +70,10 @@ module.exports = {
         }else{
             channelID.send({content: `||${rolePing}||`, embeds: [embed]})
             await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
+        }
+        const fetchGuild = await client.getGuild(interaction.member.guild)
+        if(fetchGuild){
+            client.guild.channels.cache.get(fetchGuild.logChannel).send("Annonce")
         }   
     }
 }

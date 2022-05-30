@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js')
-
+const regexId = /^\d{17,19}$/;
 module.exports = {
     name: "unban", //nom de la commande / affichée sur l'embed d'aide
     description: "Unban un membre", //description affichée sur l'embed d'aide
@@ -12,11 +12,24 @@ module.exports = {
     options: [
         {
             name: "userid",
-            description: "Ajouté l'id de la personne a unban",
+            description: "Ajoutez l'id de la personne a unban",
             type: 'STRING',
-            required: 'true'
+            required: 'true',
+            autocomplete: true
         }
     ],
+    autocomplete: async (interaction, query) => {
+        if (regexId.test(query)) {
+            const ban = await interaction.guild.bans.fetch(query).catch(() => {});
+            if (ban) {
+                interaction.respond([{ name: ban.user.tag, value: ban.user.id }]);
+            } else {
+                interaction.respond([]);
+            }
+        } else {
+            interaction.respond([]);
+        };
+    },
 
     runSlash: async (client, interaction) => {
         //response
