@@ -12,8 +12,9 @@ module.exports = {
         {
             name: "channel",
             description: "Salon où le sondage sera envoyé",
-            type: 'CHANNEL',
-            required: true
+            type: 'STRING',
+            required: true,
+            autocomplete: true
         },
         {
             name: "titre",
@@ -44,11 +45,22 @@ module.exports = {
             ]
         }
     ],
+    autocomplete: (interaction, query) => {
+        const choices = [];
+        interaction.guild.channels.cache.forEach(channel => {
+            if (choices.length < 25 && channel.isText() && channel.name.toLowerCase().includes(query.toLowerCase())) choices.push({
+                name: "#" + channel.name,
+                value: channel.id
+            });
+        })
+        interaction.respond(choices);
+    },
     runSlash: async (client, interaction) => {
-        let channelID = interaction.options.getChannel("channel")
-        let titreSondage = interaction.options.getString("titre")
-        let contenu = interaction.options.getString("contenu")
-        let colorEmbed = interaction.options.getString("couleur")
+        let channelID = interaction.guild.channels.cache.get(interaction.options.getString("channel"));
+        if (!channelID) interaction.reply({ ephemeral: true, content: "Channel invalide." });
+        let titreSondage = interaction.options.getString("titre");
+        let contenu = interaction.options.getString("contenu");
+        let colorEmbed = interaction.options.getString("couleur");
         await interaction.deferReply();
         let embed = new MessageEmbed()
         .setColor(colorEmbed)

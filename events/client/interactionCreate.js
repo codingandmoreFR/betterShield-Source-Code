@@ -14,6 +14,10 @@ module.exports = {
                 }
             }
             cmd.runSlash(client, interaction)
+        } else if (interaction.isAutocomplete()) {
+            const cmd = client.commands.get(interaction.commandName);
+            if (cmd?.autocomplete) cmd.autocomplete(interaction, interaction.options.getFocused())
+            
         }
     }
 }
