@@ -20,10 +20,15 @@ module.exports = {
     ],
     autocomplete: async (interaction, query) => {
         if (regexId.test(query)) {
-            const ban = await interaction.guild.bans.fetch(query);
-            if (ban) return interaction.respond([{ name: ban.user.tag, value: ban.user.id }]);
+            const ban = await interaction.guild.bans.fetch(query).catch(() => {});
+            if (ban) {
+                interaction.respond([{ name: ban.user.tag, value: ban.user.id }]);
+            } else {
+                interaction.respond([]);
+            }
+        } else {
+            interaction.respond([]);
         };
-        interaction.respond([]);
     },
 
     runSlash: async (client, interaction) => {
