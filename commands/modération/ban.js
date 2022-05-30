@@ -37,12 +37,12 @@ module.exports = {
 
         const member = interaction.options.getMember('membre');
         const temps = interaction.options.getInteger('temps');
-        const raison = interaction.options.getString('raison');
+        let raison = interaction.options.getString('raison');
 
         let embedNotBan = new MessageEmbed()
             .setColor('RANDOM')
             .setTitle("Bannissement")
-            .setDescription("Vous ne pouvez pas bannir ce membre !")
+            .setDescription("<:nope:973641602725736588> Vous ne pouvez pas bannir ce membre !<:nope:973641602725736588>")
             .setTimestamp()
 
         if (!member.bannable) return await interaction.editReply({ embeds: [embedNotBan], ephemeral: true })
@@ -52,8 +52,12 @@ module.exports = {
         if (!temps) {
             let embedBan = new MessageEmbed()
                 .setColor('RANDOM')
-                .setTitle(`Bannissement`)
-                .setDescription(`${interaction.user.tag} à banni ${member.user.tag}.\nRaison : ${raison}`)
+                .setTitle(`Bannissement <:bannhammer:980884603873144862> `)
+                .setDescription(`${interaction.user.username} a banni ${member.user.tag}`)
+                .addFields(
+                    { name: 'Raison :', value: `${raison}` }
+                )
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic : true}) })
                 .setTimestamp()
 
             await member.ban(({ reason: raison }))
@@ -62,8 +66,13 @@ module.exports = {
         else {
             let embedBan = new MessageEmbed()
                 .setColor('RANDOM')
-                .setTitle(`Bannissement`)
-                .setDescription(`${interaction.user.tag} à banni ${member.user.tag}.\nTemps : ${temps} jour(s) \nRaison : ${raison}`)
+                .setTitle(`Bannissement <:bannhammer:980884603873144862> `)
+                .setDescription(`${interaction.user.username} a banni ${member.user.tag}`)
+                .addFields(
+                    { name: 'Temps : ', value: `Temps : ${temps} jour(s)` },
+                    { name: 'Raison :', value: `${raison}` }
+                )
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic : true}) })
                 .setTimestamp()
             await member.ban(({ days: temps, reason: raison }))
             await interaction.editReply({ embeds: [embedBan] })

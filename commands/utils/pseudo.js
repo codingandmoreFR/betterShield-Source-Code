@@ -4,7 +4,7 @@ module.exports = {
     name: "pseudo", //nom de la commande / affichée sur l'embed d'aide
     description: "Changer son pseudo", //description affichée sur l'embed d'aide
     category: 'utiles', //utiles || modération || fondateur du bot || administration
-    ownerOnly: false, 
+    ownerOnly: false,
     usage: 'pseudo <nouveau pseudonyme>', //nom de la commande
     examples: ['pseudo <nouveau pseudonyme>'], //toutes les possibilités comme par exemple ['user', 'user [@mention]']
     permissions: ['CHANGE_NICKNAME'], //permissions comme par exemple ADMINISTRATOR
@@ -27,7 +27,7 @@ module.exports = {
 
         //init var
         const newNickName = interaction.options.getString('pseudo');
-        if (newNickName.length > 32) return interaction.editReply({ content: "❌Votre nouveau pseudo est trop long ! (Supérieur à 32 caractères)❌ ",ephemeral: true });
+        if (newNickName.length > 32) return interaction.editReply({ content: "❌Votre nouveau pseudo est trop long ! (Supérieur à 32 caractères)❌ ", ephemeral: true });
         let OldNickName = interaction.member.nickname || interaction.user.username;
         await interaction.member.setNickname(newNickName).catch(console.error())
         //create embed
@@ -38,7 +38,7 @@ module.exports = {
             .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
 
-            
+
         //send
         interaction.editReply({ embeds: [embedPseudo] });
     }
