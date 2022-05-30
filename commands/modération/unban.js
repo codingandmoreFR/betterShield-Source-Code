@@ -12,7 +12,7 @@ module.exports = {
     options: [
         {
             name: "userid",
-            description: "Ajouté l'id de la personne a unban",
+            description: "Ajoutez l'id de la personne a unban",
             type: 'STRING',
             required: 'true'
         }
