@@ -8,7 +8,7 @@ function error(content) {
 }
 
 function warn(content){
-    write(content, 'black', 'bgYellow', 'WARN', false)
+    write(content, 'white', 'bgRed', 'WARN', false)
 }
 
 function typo(content){
