@@ -13,7 +13,7 @@ module.exports = {
             name: "signalement",
             description: "Signale le problème que tu as",
             type: 'STRING',
-            required: 'true'
+            required: true
         }
     ],
     runSlash: async (client, interaction) => {
