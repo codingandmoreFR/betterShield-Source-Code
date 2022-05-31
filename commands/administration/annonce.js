@@ -39,7 +39,6 @@ module.exports = {
                 { name: "bleu", value: "BLUE" }, 
                 { name: "vert", value: "GREEN" }, 
                 { name: "rouge", value: "RED" }, 
-                { name: "rose", value: "PINK" }, 
                 { name: "violet", value: "PURPLE" }, 
                 { name: "aléatoire", value: "RANDOM" }
             ]
@@ -71,7 +70,7 @@ module.exports = {
             channelID.send({content: `||${rolePing}||`, embeds: [embed]})
             await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
         }
-        const fetchGuild = await client.getGuild(interaction.member.guild)
+        const fetchGuild = await client.getidGuild(interaction.member.guild)
         if(fetchGuild){
             client.guild.channels.cache.get(fetchGuild.logChannel).send("Annonce")
         }   

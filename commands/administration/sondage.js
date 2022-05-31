@@ -39,7 +39,6 @@ module.exports = {
                 { name: "bleu", value: "BLUE" }, 
                 { name: "vert", value: "GREEN" }, 
                 { name: "rouge", value: "RED" }, 
-                { name: "rose", value: "PINK" }, 
                 { name: "violet", value: "PURPLE" }, 
                 { name: "aléatoire", value: "RANDOM" }
             ]
