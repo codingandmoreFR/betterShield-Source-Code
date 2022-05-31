@@ -47,6 +47,7 @@ module.exports = {
             .setTitle("Commandes disponibles")
             .setDescription("Si tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
             .setTimestamp()
+            .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             for (const category of commandFolder){
                 noArgsEmbed.addField(
                 `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())}`, 

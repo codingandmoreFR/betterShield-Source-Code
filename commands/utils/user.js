@@ -36,6 +36,7 @@ module.exports = {
             { name: "Créé le", value: `${createdDate} (${RelativeCreatedDate})`, inline: true },
             { name: "Rejoint le", value: `${joinDate} (${RelativeJoinDate})`, inline: true }
         )
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         await interaction.editReply({embeds: [embed]}) 
     }

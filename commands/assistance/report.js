@@ -23,6 +23,7 @@ module.exports = {
         .setColor("RANDOM")
         .setAuthor({text: `${interaction.user.tag}, ${interaction.user.id}`})
         .setDescription(contenu)
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         await interaction.editReply({embeds : [embed]})
     }

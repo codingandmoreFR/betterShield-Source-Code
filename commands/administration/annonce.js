@@ -62,7 +62,7 @@ module.exports = {
         .setColor(colorEmbed)
         .setTitle(titreAnnonce)
         .setDescription(contenu)
-        .setFooter({text: `Par ${interaction.user.tag}`})
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         if(!rolePing){
             channelID.send({embeds: [embed]})
