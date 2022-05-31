@@ -1,0 +1,114 @@
+Bonjour, ceci est une copie à 99% du handler donné par <@755447668595097734>!
+
+Premièrement, créez un index.js de mettez ça dedans
+```js
+const { Collection, Client } = require('discord.js');
+const { readdirSync } = require('fs');
+const Client = new Client(/*Avec vos Intents !*/);
+
+client.prefix = '!'; // Le préfixe
+client.commands = new Collection();
+
+const commandFiles = readdirSync('./commads').filter(file => file.endsWith('.js'));
+const eventFiles = readdirSync('./events').filter(file => file.endsWith('.js'));
+
+for (const file of commandFiles){
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
+
+for (const file of eventFiles) {
+    const event = require(`./events/${file}`);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(client, ...args));
+    } else {
+        client.on(event.name, (...args) => event.execute(client, ...args));
+    }
+}
+
+client.login("Token");
+```
+
+Puis créez deux dossiers : commands et events
+Enfin dans le dossier events, on crée un fichier nommé messageCreate.js :
+```js
+module.exports = {
+    name: 'messageCreate',
+    once: false,
+    async execute (client, message) {
+        if (message.author.bot) return;
+        if (!message.content.toLowerCase().startsWith(client.prefix)) return;
+        if (message.channel.type === 'DM') return;
+
+        const args = message.content.slice(client.prefix.length).trim().split(/ +/);
+        const commandName = args.shift().toLowerCase();
+
+        const command = client.commands.get(commandName);
+
+        if (command) {
+            try {
+                command.execute(client, message, args);
+            } catch (err) {
+                console.error(`Une erreur est survenue :\n${err}`);
+            };
+        };
+    },
+}
+```
+Puis un interactionCreate.js:
+```js
+module.exports = {
+    name: 'interactionCreate',
+    once: false,
+    async execute (client, interaction) {
+        const command = client.commands.get(interaction.commandName);
+
+        if (command) {
+	        try {
+                command.execute(client, interaction);
+        	} catch (err) {
+           	    console.error(`Une erreur est survenue :\n${err}`);
+        	};
+        } else {
+	        interaction.reply({ ephemeral: true, content: "Commande inconnue" })
+        };
+    },
+}
+```
+
+Bien évidemment un event ready
+```js
+module.exports = {
+    name: 'ready',
+    once: true,
+    async execute(client) {
+        console.log(`Bot ${client.user.tag} en ligne`);
+
+        client.guilds.cache.get(/*id du serveur*/).commands.set(client.commands.map(cmd => {
+            return {
+                name: cmd.name,
+                description: cmd.description,
+                options: cmd.options,
+                type: 1
+            };
+        }));       
+    }
+}
+```
+
+Et puis pour chaque commande, créez un fichier .js dans le dossier commands
+Par exemple (ici un fichier ping.js)
+```js
+module.exports = {
+    name: 'ping',
+    descirption: 'Renvoie le ping du bot',
+    execute(client, message, args){ // Pour les commandes par texte
+        message.reply(`🏓 Pong ! Le ping est de **${client.ws.ping}**ms`);
+    },
+    executeSlash(client, interaction){ // Pour les commandes slash
+        interaction.reply(`🏓 Pong ! Le ping est de **${client.ws.ping}**ms`);
+    }
+}
+```
+
+Ceci n'est bien évidemment pas la seul manière de faire un handler, mais seulement une parmis beaucoup d'autres!

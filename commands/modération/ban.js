@@ -13,19 +13,19 @@ module.exports = {
             name: "membre",
             description: "Membre a ban",
             type: 'USER',
-            required: 'true'
+            required: true
         },
         {
             name: "raison",
             description: "Raison du ban",
             type: 'STRING',
-            required: 'false'
+            required: false
         },
         {
             name: "temps",
             description: "Temps du ban en jours. Temps par défaut : permanent ",
             type: 'INTEGER',
-            required: 'false'
+            required: false
         }
 
     ],
