@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js")
+const mongoose = require("mongoose")
 const { Guild } = require("../../models/indexMongo")
 
 module.exports = {
@@ -70,9 +71,11 @@ module.exports = {
             channelID.send({content: `||${rolePing}||`, embeds: [embed]})
             await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
         }
-        const fetchGuild = await client.getidGuild(interaction.member.guild)
+        const fetchGuild = await Guild.test.find(interaction.guild)(interaction.guild)
+        console.log("Guild id: " + fetchGuild.idGuild)
+        console.log("Channel id: " + fetchGuild.logChannel)
         if(fetchGuild){
-            client.guild.channels.cache.get(fetchGuild.logChannel).send("Annonce")
+            client.guilds.cache.get(interaction.guild).channels.cache.get(fetchGuild.logChannel).send("Annonce")
         }   
     }
 }
