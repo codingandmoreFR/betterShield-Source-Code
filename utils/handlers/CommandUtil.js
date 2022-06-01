@@ -5,6 +5,7 @@ const Logger = require("../Logger")
 
 module.exports = async client => {
     (await pGlob(`${process.cwd()}/commands/*/*.js`)).map(async (commandFile) => {
+        const cmd = require(commandFile);
 
         if(!cmd.name){
             return Logger.warn(`Commande non chargée : pas de nom.\nFichier -> ${commandFile}`)
