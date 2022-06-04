@@ -12,19 +12,19 @@ module.exports = {
     permissions: ['ADMINISTRATOR'],
     options: [
         {
-            name: "activé",
-            description: "activé le système d'annonce",
+            name: "activer",
+            description: "active le système d'annonce",
             type: 1, // 1 is type SUB_COMMAND
             options: [{
                 name: "channel",
-                description: "Le channel ou seront posté les annonce",
+                description: "Le channel ou seront posté les annonces",
                 type: 7, // 7 is type CHANNEL
                 required: true
             }]
         },
         {
-            name: "désactivé",
-            description: "désactivé le système d'annonce",
+            name: "désactiver",
+            description: "désactive le système d'annonce",
             type: 1
         }
     ],
@@ -55,7 +55,13 @@ module.exports = {
                     if (data.length < 1) {
                         db.run('INSERT INTO config_annonce (id, name, channel, actif) VALUES(?,?,?,?)', [interaction.guild.id, interaction.guild.name, channel.id, 1], async (err) => {
                             if (err) return console.error(err.message);
-                            await interaction.editReply(`<a:above:973641634216546306> Channel d'annonce enregistré et activé! <a:arrowok:973641633524506624> <#${channel.id}>`)
+                            let embed = new MessageEmbed()
+                            .setColor("RANDOM")
+                            .setTitle("Channel d'annonce activé !")
+                            .setDescription(`Le channel d'annonce est enregistré et activé !\n<a:arrowok:973641633524506624> <#${channel.id}>`)
+                            .setTimestamp()
+                            .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                            await interaction.editReply({embeds: [embed]})
                         })
                     }
 
@@ -69,10 +75,22 @@ module.exports = {
                                 if (err) return console.error(err.message);
 
                                 if (channel.id === oldChannel) {
-                                    await interaction.editReply(`<a:above:973641634216546306>  Channel d'annonce réactivé <a:arrowok:973641633524506624> <#${channel.id}>`)
+                                    let embed = new MessageEmbed()
+                                    .setColor("RANDOM")
+                                    .setTitle("Channel d'annonce réactivé !")
+                                    .setDescription(`Le channel d'annonce est réactivé !\n<a:above:973641634216546306> <#${channel.id}>`)
+                                    .setTimestamp()
+                                    .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                                    await interaction.editReply({embeds: [embed]})
                                 }
                                 else {
-                                    await interaction.editReply(`<a:above:973641634216546306>  Channel d'annonce modifié : <#${oldChannel}>  <a:arrowok:973641633524506624> <#${channel.id}>`)
+                                    let embed = new MessageEmbed()
+                                    .setColor("RANDOM")
+                                    .setTitle("Channel d'annonce modifié !")
+                                    .setDescription(`Le channel d'annonce vient d'être modifié !\n<a:above:973641634216546306> <#${channel.id}>`)
+                                    .setTimestamp()
+                                    .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                                    await interaction.editReply({embeds: [embed]})
                                 }
                             })
                         })
@@ -86,7 +104,13 @@ module.exports = {
                 //update
                 db.run('UPDATE config_annonce SET actif = 0', async (err) => {
                     if (err) return console.error(err.message);
-                    await interaction.editReply("<a:down:973641634958954577> Channel d'annonce désactiver !")
+                    let embed = new MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle("Channel d'annonce réactivé !")
+                    .setDescription(`<a:down:973641634958954577> Channel d'annonce désactivé !`)
+                    .setTimestamp()
+                    .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                    await interaction.editReply({embeds: [embed]})
                 })
 
             }

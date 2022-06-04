@@ -69,8 +69,9 @@ module.exports = {
                 .setColor("RANDOM")
                 .setTitle("Channel d'annonce non configuré !")
                 .setDescription("Veuillez configurer un channel d'annonce !\n<a:arrowok:973641633524506624> `/config_annonce activé <channel>`")
-                .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
-                return await interaction.reply({embeds: [embed], ephemeral: true })
+                .setTimestamp()
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                return await interaction.reply({embeds: [embed]})
             }
 
             if(!data[0].actif){
@@ -78,8 +79,9 @@ module.exports = {
                 .setColor("RANDOM")
                 .setTitle("Système d'annonce désactivé !")
                 .setDescription("Veuillez activer le système d'annonce !\n<a:arrowok:973641633524506624> `/config_annonce activé <channel>`")
-                .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
-                return await interaction.reply({embeds: [embed], ephemeral: true })
+                .setTimestamp()
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                return await interaction.reply({embeds: [embed]})
             }
             
             let embed = new MessageEmbed()
@@ -89,11 +91,25 @@ module.exports = {
                 .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
                 .setTimestamp()
             if (!rolePing) {
-                channel.send({ embeds: [embed] })
-                await interaction.reply({ content: `Annonce envoyée au channel <a:arrowok:973641633524506624> <#${channelid}>!`, ephemeral: true })
+                let embed2 = new MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Annonce envoyée !")
+                .setDescription(`Annonce envoyée ! \n<a:arrowok:973641633524506624> <#${channelid}> !`)
+                .setTimestamp()
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                await interaction.reply({embeds: [embed2], ephemeral: true}).then(
+                    channel.send({embeds: [embed]})
+                )        
             } else {
-                channel.send({ content: `||${rolePing}||`, embeds: [embed] })
-                await interaction.reply({ content: `Annonce envoyée au channel <a:arrowok:973641633524506624> <#${channelid}>!`, ephemeral: true })
+                let embed2 = new MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Annonce envoyée !")
+                .setDescription(`Annonce envoyée ! \n<a:arrowok:973641633524506624> <#${channelid}> !`)
+                .setTimestamp()
+                .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                await interaction.reply({embeds: [embed2], ephemeral: true}).then(
+                    channel.send({ content: `||${rolePing}||`, embeds: [embed] })
+                )            
             }
 
         })
