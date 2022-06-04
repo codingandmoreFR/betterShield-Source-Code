@@ -50,6 +50,7 @@ module.exports = {
             required: false
         }
     ],
+
     runSlash: async (client, interaction) => {
         //let channelID = interaction.options.getChannel("channel")
         let titreAnnonce = interaction.options.getString("titre")

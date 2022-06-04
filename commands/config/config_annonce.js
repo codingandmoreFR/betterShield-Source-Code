@@ -18,8 +18,9 @@ module.exports = {
             options: [{
                 name: "channel",
                 description: "Le channel ou seront posté les annonce",
-                type: 7, // 7 is type CHANNEL
-                required: true
+                type: 'STRING', // 7 is type CHANNEL
+                required: true,
+                autocomplete: true
             }]
         },
         {
@@ -28,6 +29,16 @@ module.exports = {
             type: 1
         }
     ],
+    autocomplete: (interaction, query) => {
+        const choices = [];
+        interaction.guild.channels.cache.forEach(channel => {
+            if (choices.length < 25 && channel.isText() && channel.name.toLowerCase().includes(query.toLowerCase())) choices.push({
+                name: "#" + channel.name,
+                value: channel.id
+            });
+        })
+        interaction.respond(choices);
+    },
     runSlash: async (client, interaction) => {
         //reply
         await interaction.deferReply()
@@ -40,7 +51,8 @@ module.exports = {
             if (interaction.options.getSubcommand() === 'activé') {
 
                 //take option
-                const channel = interaction.options.getChannel('channel');
+                const channel = interaction.guild.channels.cache.get(interaction.options.getString("channel"));
+                if (!channel) interaction.reply({ ephemeral: true, content: "Channel invalide." });
 
                 //each table
                 db.all(`SELECT id, channel FROM config_annonce WHERE id = "${interaction.guild.id}"`, (err, data) => {
