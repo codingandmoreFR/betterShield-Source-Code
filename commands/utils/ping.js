@@ -19,7 +19,7 @@ module.exports = {
             { name: "Démarré", value: `<t:${parseInt(client.readyTimestamp / 1000)}:R>`, inline: false}
         )
         .setTimestamp()
-        .setFooter({text: interaction.user.username, iconURL: interaction.user.displayAvatarURL()})
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         await interaction.editReply({embeds : [embed]})
     }
 }

@@ -25,7 +25,7 @@ module.exports = {
         .setColor("RANDOM")
         .setTitle(`Voici votre recherche : `)
         .setDescription(`https://www.google.fr/search?q=${args}`)
-        .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({dynamic : true}) })
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         await interaction.editReply({embeds: [embedSearch]})
     }

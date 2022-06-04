@@ -65,7 +65,7 @@ module.exports = {
         .setColor(colorEmbed)
         .setTitle(titreSondage)
         .setDescription(contenu)
-        .setFooter({text: `Par ${interaction.user.tag}`})
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         const pool = await channel.send({embeds: [embed], fetchReply: true})   
         pool.react("<:plusdeux:973641602876702812>")  

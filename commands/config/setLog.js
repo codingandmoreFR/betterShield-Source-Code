@@ -24,6 +24,7 @@ module.exports = {
         channelLogID = channelLog.id
         const logSet = new Guild({ idGuild: guildID, logChannel: channelLogID})
         logSet.save().then(i => console.log(`Channel log = ${i.channelLogID}`))
+        await client.createGuild(interaction.guild)
         await interaction.editReply({content: `Salon de logs créé : <#${channelLogID}>.`})
     }
 }

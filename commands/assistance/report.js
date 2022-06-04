@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js")
 
 module.exports = {
     name: "report",
-    description: "Signale un problème à l'équipe de développement du bot",
+    description: "Signale un problème à l'équipe de développement du bot (tout abus sera sanctionné)",
     category: 'assistance',
     ownerOnly: false,
     usage: 'report <problème>',
@@ -21,9 +21,12 @@ module.exports = {
         let contenu = interaction.options.getString("signalement")
         let embed = new MessageEmbed()
         .setColor("RANDOM")
-        .setAuthor({text: `${interaction.user.tag}, ${interaction.user.id}`})
-        .setDescription(contenu)
+        .setTitle("Signalement !")
+        .addField("Contenu :", contenu)
+        .addField("ID du signaleur :", `${interaction.user.id}`)
+        .addField("Nom du signaleur :", `${interaction.user.tag}`)
         .setTimestamp()
-        await interaction.editReply({embeds : [embed]})
+        await interaction.editReply(`Signalement envoyé !`)
+        client.guilds.cache.get("916457476679938128").channels.cache.get('981225409603567676').send({embeds: [embed]})
     }
 }

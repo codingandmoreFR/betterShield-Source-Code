@@ -16,6 +16,7 @@ module.exports = {
         .addField("Lien : ", "https://discord.com/api/oauth2/authorize?client_id=979102811197415474&permissions=0&scope=bot%20applications.commands")
         .addField("Support : ", "https://discord.gg/betterShield")
         .addField("Créateurs(ices) : ", "Malcolm#2939, Nanapiou#9565, Xecozz#1321")
+        .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
         await interaction.editReply({embeds: [embed]})
     }

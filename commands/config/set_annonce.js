@@ -12,19 +12,19 @@ module.exports = {
     permissions: ['ADMINISTRATOR'],
     options: [
         {
-            name: "activé",
-            description: "activé le système d'annonce",
+            name: "activer",
+            description: "active le système d'annonce",
             type: 1, // 1 is type SUB_COMMAND
             options: [{
                 name: "channel",
-                description: "Le channel ou seront posté les annonce",
+                description: "Le channel où seront postées les annonces",
                 type: 7, // 7 is type CHANNEL
                 required: true
             }]
         },
         {
-            name: "désactivé",
-            description: "désactivé le système d'annonce",
+            name: "désactiver",
+            description: "désactive le système d'annonce",
             type: 1
         }
     ],
@@ -37,7 +37,7 @@ module.exports = {
             if (err) return console.error(err.message);
 
             //if subscommand == activé
-            if (interaction.options.getSubcommand() === 'activé') {
+            if (interaction.options.getSubcommand() === 'activer') {
 
                 //take option
                 const channel = interaction.options.getChannel('channel');
@@ -78,7 +78,7 @@ module.exports = {
             }
 
             //if subscommand == désactivé
-            if (interaction.options.getSubcommand() === 'désactivé') {
+            if (interaction.options.getSubcommand() === 'désactiver') {
 
                 //update
                 db.run('UPDATE config_annonce SET actif = 0', async (err) => {
