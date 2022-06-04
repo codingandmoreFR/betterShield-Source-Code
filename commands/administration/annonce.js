@@ -70,12 +70,6 @@ module.exports = {
         }else{
             channelID.send({content: `||${rolePing}||`, embeds: [embed]})
             await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
-        }
-        const fetchGuild = await client.getGuild(interaction.guild)
-        console.log("Guild id: " + fetchGuild.idGuild)
-        console.log("Channel id: " + fetchGuild.logChannel)
-        if(fetchGuild){
-            client.guilds.cache.get(interaction.guild).channels.cache.get(fetchGuild.logChannel).send("Annonce")
-        }   
+        }  
     }
 }
