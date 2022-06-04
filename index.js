@@ -36,11 +36,11 @@ let db = new sqlite3.Database(dbname, sqlite3.OPEN_READWRITE, err => {
     if(err)
         throw err
 
-    console.log('Database start : ' + dbname)
+    Logger.client('Database start : ' + dbname)
 })
 
 db.on("error", function(error) {
-    console.log("Getting an error : ", error);
+    Logger.warn("Getting an error : ", error);
 }); 
 
 
