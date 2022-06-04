@@ -12,6 +12,8 @@ const client = new Client({ intents: 32767 });
 const dayjs = require("dayjs")
 const chalk = require("chalk")
 const Logger = require("./utils/Logger")
+const sqlite3 = require("sqlite3").verbose();
+const dbname = 'main.db'
 
 
 client.commands = new Collection()
@@ -28,18 +30,34 @@ client.on("guildMemberAdd", (member) => {
     member.roles.add("978763926013616199")
 })
 
+//ouverture bdd
 
+let db = new sqlite3.Database(dbname, sqlite3.OPEN_READWRITE, err => {
+    if(err)
+        throw err
 
-mongoose.connect(process.env.DATABASE_URI, {
-    autoIndex: false,
-    maxPoolSize: 10,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-    family: 4 
-}).then(() => {
-    Logger.client("- Connecté à la base de données.")
-}).catch(err => {
-    Logger.warn("- Non connecté à la base de données." + err)
+    console.log('Database start : ' + dbname)
 })
+
+db.on("error", function(error) {
+    console.log("Getting an error : ", error);
+}); 
+
+
+module.exports = {
+    db
+}
+
+// mongoose.connect(process.env.DATABASE_URI, {
+//     autoIndex: false,
+//     maxPoolSize: 10,
+//     serverSelectionTimeoutMS: 5000,
+//     socketTimeoutMS: 45000,
+//     family: 4 
+// }).then(() => {
+//     Logger.client("- Connecté à la base de données.")
+// }).catch(err => {
+//     Logger.warn("- Non connecté à la base de données." + err)
+// })
 
 client.login(process.env.DISCORD_TOKEN)
