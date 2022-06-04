@@ -65,18 +65,29 @@ module.exports = {
 
 
             if(!data[0]){
-                return await interaction.reply({ content: `<:nope:973641602725736588> Veuillez configurer un channel d'annonce <a:arrowok:973641633524506624> /config_annonce activé <channel> ! `, ephemeral: true })
+                let embed = new MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Channel d'annonce non configuré !")
+                .setDescription("Veuillez configurer un channel d'annonce !\n<a:arrowok:973641633524506624> `/config_annonce activé <channel>`")
+                .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                return await interaction.reply({embeds: [embed], ephemeral: true })
             }
 
             if(!data[0].actif){
-                return await interaction.reply({ content: `<:nope:973641602725736588> Le système d'annonce est désactivé sur le serveur <a:arrowok:973641633524506624> /config_annonce activé <channel> ! `, ephemeral: true })
+                await interaction.reply({ content: `<:nope:973641602725736588> Le système d'annonce est désactivé sur le serveur <a:arrowok:973641633524506624> /config_annonce activé <channel> ! `, ephemeral: true })
+                let embed = new MessageEmbed()
+                .setColor("RANDOM")
+                .setTitle("Système d'annonce désactivé !")
+                .setDescription("Veuillez activer le système d'annonce !\n<a:arrowok:973641633524506624> `/config_annonce activé <channel>`")
+                .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
+                return await interaction.reply({embeds: [embed], ephemeral: true })
             }
             
             let embed = new MessageEmbed()
                 .setColor(colorEmbed)
                 .setTitle(titreAnnonce)
                 .setDescription(contenu)
-                .setFooter({ text: `Par ${interaction.user.tag}` })
+                .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
                 .setTimestamp()
             if (!rolePing) {
                 channel.send({ embeds: [embed] })
