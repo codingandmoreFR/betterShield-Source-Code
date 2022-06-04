@@ -37,7 +37,7 @@ module.exports = {
             if (err) return console.error(err.message);
 
             //if subscommand == activé
-            if (interaction.options.getSubcommand() === 'activé') {
+            if (interaction.options.getSubcommand() === 'activer') {
 
                 //take option
                 const channel = interaction.options.getChannel('channel');
@@ -70,7 +70,7 @@ module.exports = {
             }
 
             //if subscommand == désactivé
-            if (interaction.options.getSubcommand() === 'désactivé') {
+            if (interaction.options.getSubcommand() === 'désactiver') {
 
                 //update
                 db.run('UPDATE config_annonce SET actif = 0', (err) => {
