@@ -74,7 +74,6 @@ module.exports = {
             }
 
             if(!data[0].actif){
-                await interaction.reply({ content: `<:nope:973641602725736588> Le système d'annonce est désactivé sur le serveur <a:arrowok:973641633524506624> /config_annonce activé <channel> ! `, ephemeral: true })
                 let embed = new MessageEmbed()
                 .setColor("RANDOM")
                 .setTitle("Système d'annonce désactivé !")
