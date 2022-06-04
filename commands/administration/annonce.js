@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const mongoose = require("mongoose")
-const { Guild } = require("../../models/indexMongo")
+// const { Guild } = require("../../models/indexMongo")
+const { db } = require("../../index")
 
 module.exports = {
     name: "annonce",
@@ -11,12 +12,12 @@ module.exports = {
     examples: ['annonce <channel> <titre> <contenu> <couleur>'],
     permissions: ['ADMINISTRATOR'],
     options: [
-        {
-            name: "channel",
-            description: "Salon où l'annonce sera envoyé",
-            type: 'CHANNEL',
-            required: true
-        },
+        // {
+        //     name: "channel",
+        //     description: "Salon où l'annonce sera envoyé",
+        //     type: 'CHANNEL',
+        //     required: true
+        // },
         {
             name: "titre",
             description: "Titre de l'annonce",
@@ -35,12 +36,12 @@ module.exports = {
             type: "STRING",
             required: true,
             choices: [
-                { name: "noir", value: "BLACK" }, 
-                { name: "blanc", value: "WHITE" }, 
-                { name: "bleu", value: "BLUE" }, 
-                { name: "vert", value: "GREEN" }, 
-                { name: "rouge", value: "RED" }, 
-                { name: "violet", value: "PURPLE" }, 
+                { name: "noir", value: "BLACK" },
+                { name: "blanc", value: "WHITE" },
+                { name: "bleu", value: "BLUE" },
+                { name: "vert", value: "GREEN" },
+                { name: "rouge", value: "RED" },
+                { name: "violet", value: "PURPLE" },
                 { name: "aléatoire", value: "RANDOM" }
             ]
         },
@@ -52,30 +53,41 @@ module.exports = {
         }
     ],
     runSlash: async (client, interaction) => {
-        let channelID = interaction.options.getChannel("channel")
+        //let channelID = interaction.options.getChannel("channel")
         let titreAnnonce = interaction.options.getString("titre")
         let contenu = interaction.options.getString("contenu")
         let colorEmbed = interaction.options.getString("couleur")
         let rolePing = interaction.options.getRole("role")
+
         await interaction.deferReply();
-        let embed = new MessageEmbed()
-        .setColor(colorEmbed)
-        .setTitle(titreAnnonce)
-        .setDescription(contenu)
-        .setFooter({text: `Par ${interaction.user.tag}`})
-        .setTimestamp()
-        if(!rolePing){
-            channelID.send({embeds: [embed]})
-            await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
-        }else{
-            channelID.send({content: `||${rolePing}||`, embeds: [embed]})
-            await interaction.editReply({content: "Annonce envoyée !", ephemeral: true})
-        }
-        const fetchGuild = await Guild.test.find(interaction.guild)(interaction.guild)
-        console.log("Guild id: " + fetchGuild.idGuild)
-        console.log("Channel id: " + fetchGuild.logChannel)
-        if(fetchGuild){
-            client.guilds.cache.get(interaction.guild).channels.cache.get(fetchGuild.logChannel).send("Annonce")
-        }   
+
+        db.all(`SELECT channel FROM config_annonce WHERE id = "${interaction.guild.id}"`, async (err, data) => {
+
+            const channelid = data[0].channel
+            const channel = interaction.guild.channels.cache.get(channelid);
+
+            let embed = new MessageEmbed()
+                .setColor(colorEmbed)
+                .setTitle(titreAnnonce)
+                .setDescription(contenu)
+                .setFooter({ text: `Par ${interaction.user.tag}` })
+                .setTimestamp()
+            if (!rolePing) {
+                channel.send({ embeds: [embed] })
+                await interaction.editReply({ content: `Annonce envoyée au channel <a:arrowok:973641633524506624> <#${channelid}>!`, ephemeral: true })
+            } else {
+                channel.send({ content: `||${rolePing}||`, embeds: [embed] })
+                await interaction.editReply({ content:  `Annonce envoyée au channel <a:arrowok:973641633524506624> <#${channelid}>!`, ephemeral: true })
+            }
+
+        })
+
     }
 }
+
+
+// const fetchGuild = await Guild.test.find(interaction.guild)(interaction.guild)
+        // console.log("Guild id: " + fetchGuild.idGuild)
+        // console.log("Channel id: " + fetchGuild.logChannel)
+        // if(fetchGuild){
+//}

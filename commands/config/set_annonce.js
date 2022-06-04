@@ -33,7 +33,7 @@ module.exports = {
         await interaction.deferReply()
 
         //check if table exist, if not create this
-        db.run(`CREATE TABLE IF NOT EXISTS config_annonce(id, name TEXT, channel, actif INTEGER)`, async (err) => {
+        db.run(`CREATE TABLE IF NOT EXISTS config_annonce(id, name TEXT, channel, actif INTEGER)`, (err) => {
             if (err) return console.error(err.message);
 
             //if subscommand == activé
@@ -41,42 +41,51 @@ module.exports = {
 
                 //take option
                 const channel = interaction.options.getChannel('channel');
-                console.log(interaction.guild.id)
 
                 //each table
-                db.get(`SELECT id FROM config_annonce WHERE id = ${interaction.guild.id}`, (err, data) => {
+                db.all(`SELECT id, channel FROM config_annonce WHERE id = "${interaction.guild.id}"`, (err, data) => {
                     if (err) return console.error(err.message);
+
+                    let oldChannel = data[0].channel
+
                     //set
-                    if (!data) {
-                        db.run('INSERT INTO config_annonce (id, name, channel, actif) VALUES(?,?,?,?)', [interaction.guild.id, interaction.guild.name, channel.id, 1], (err) => {
+                    if (data.length < 1) {
+                        db.run('INSERT INTO config_annonce (id, name, channel, actif) VALUES(?,?,?,?)', [interaction.guild.id, interaction.guild.name, channel.id, 1], async (err) => {
                             if (err) return console.error(err.message);
+                            await interaction.editReply(`<a:above:973641634216546306> Channel d'annonce enregistré et activé! <a:arrowok:973641633524506624> <#${channel.id}>`)
                         })
                     }
 
                     //update
                     else {
-                        db.run(`UPDATE config_annonce SET channel = ${channel.id} WHERE id = ${interaction.guild.id}`, (err) => {
-                            if (err) return console.error(err.message);
-                        })
 
-                        db.run(`UPDATE config_annonce SET actif = 1 WHERE id = ${interaction.guild.id}`, (err) => {
+                        db.run(`UPDATE config_annonce SET channel = "${channel.id}", actif = 1 WHERE id = "${interaction.guild.id}"`, async (err) => {
                             if (err) return console.error(err.message);
+
+                            db.all(`SELECT channel FROM config_annonce WHERE id = "${interaction.guild.id}"`, async (err, data) => {
+                                if (err) return console.error(err.message);
+
+                                if (channel.id === oldChannel) {
+                                    await interaction.editReply(`<a:above:973641634216546306>  Channel d'annonce réactivé <a:arrowok:973641633524506624> <#${channel.id}>`)
+                                }
+                                else {
+                                    await interaction.editReply(`<a:above:973641634216546306>  Channel d'annonce modifié : <#${oldChannel}>  <a:arrowok:973641633524506624> <#${channel.id}>`)
+                                }
+                            })
                         })
                     }
                 })
-
-                //reply
-                await interaction.editReply("Channel d'annonce enregistré et activé !")
             }
 
             //if subscommand == désactivé
             if (interaction.options.getSubcommand() === 'désactivé') {
 
                 //update
-                db.run('UPDATE config_annonce SET actif = 0', (err) => {
+                db.run('UPDATE config_annonce SET actif = 0', async (err) => {
                     if (err) return console.error(err.message);
+                    await interaction.editReply("<a:down:973641634958954577> Channel d'annonce désactiver !")
                 })
-                await interaction.editReply("Channel d'annonce désactiver !")
+
             }
 
         })
