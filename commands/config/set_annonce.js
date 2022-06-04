@@ -12,19 +12,19 @@ module.exports = {
     permissions: ['ADMINISTRATOR'],
     options: [
         {
-            name: "activé",
-            description: "activé le système d'annonce",
+            name: "activer",
+            description: "active le système d'annonce",
             type: 1, // 1 is type SUB_COMMAND
             options: [{
                 name: "channel",
-                description: "Le channel ou seront posté les annonce",
+                description: "Le channel où seront postées les annonces",
                 type: 7, // 7 is type CHANNEL
                 required: true
             }]
         },
         {
-            name: "désactivé",
-            description: "désactivé le système d'annonce",
+            name: "désactiver",
+            description: "désactive le système d'annonce",
             type: 1
         }
     ],
