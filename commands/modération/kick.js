@@ -44,7 +44,7 @@ module.exports = {
         let embedKick = new MessageEmbed()
             .setColor('RANDOM')
             .setTitle(`<a:above:973641634216546306> Expulsion Réussie `)
-            .setDescription(`${interaction.user.username} à expulsé ${member.user.username}.\nRaison : ${raison}`)
+            .setDescription(`${interaction.user.username} a expulsé ${member.user.username}.\nRaison : ${raison}`)
             .setFooter({ text: `Par ${interaction.user.tag}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
         if(raison){
