@@ -4,7 +4,7 @@ module.exports = {
     name: "mute",
     description: "mute un membre",
     category: 'modération',
-    permissions: ["KICK_MEMBERS"],
+    permissions: ["MUTE_MEMBERS"],
     ownerOnly: false,
     usage: 'mute <@mention> [temps]',
     examples: ['mute <@mention>', 'mute <@mention> [temps]'],
@@ -75,7 +75,7 @@ module.exports = {
             .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             .setTimestamp()
 
-        if (member.permissions.has('KICK_MEMBERS')) return await interaction.editReply({ embeds: [embedNotMute], ephemeral: true })
+        if (member.permissions.has('MUTE_MEMBERS')) return await interaction.editReply({ embeds: [embedNotMute], ephemeral: true })
 
         if (!raison) raison = "Aucune";
 

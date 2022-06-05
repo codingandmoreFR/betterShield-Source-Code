@@ -4,7 +4,7 @@ module.exports = {
     name: "unmute",
     description: "unmute un membre",
     category: 'modération',
-    permissions: ["KICK_MEMBERS"],
+    permissions: ["MUTE_MEMBERS"],
     ownerOnly: false,
     usage: 'unmute <@mention> [temps]',
     examples: ['unmute <@mention>', 'unmute <@mention>'],
