@@ -41,7 +41,7 @@ let db = new sqlite3.Database(dbname, sqlite3.OPEN_READWRITE, err => {
 
 db.on("error", function(error) {
     Logger.warn("Getting an error : ", error);
-}); 
+});
 
 
 module.exports = {

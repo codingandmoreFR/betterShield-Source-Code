@@ -38,7 +38,7 @@ module.exports = {
                     `<:channel:973641606928416839>** Tag de ${member.user.username}** : ${member.user.tag}`,
                     ` <:production_robot:983038254825762846> ** Bot **: ${member.user.bot ? "Oui" : "Non"}`,
                     `<:IconGui_NameEdited:983038852581167217> **Pseudonyme** : ${member.nickname ? member.nickname : "Aucun"}`,
-                    `<:arrow_join:983034698357936219> **Créé le :** : ${createdDate} (${RelativeCreatedDate}) `,
+                    `<:arrow_join:983034698357936219> **Créé le ** : ${createdDate} (${RelativeCreatedDate}) `,
                 ].join("\n")
             },
             {
