@@ -13,7 +13,7 @@ module.exports = {
     options: [
         {
             name: "activé",
-            description: "activé le système de logs",
+            description: "active le système de logs",
             type: 1, // 1 is type SUB_COMMAND
             options: [{
                 name: "channel",
@@ -25,7 +25,7 @@ module.exports = {
         },
         {
             name: "désactivé",
-            description: "désactivé le système de logs",
+            description: "désactive le système de logs",
             type: 1
         }
     ],
