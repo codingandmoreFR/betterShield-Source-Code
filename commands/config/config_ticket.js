@@ -71,12 +71,12 @@ module.exports = {
                     let oldCategoryCreate = "Aucun";
                     let oldCategoryArchive = "Aucun";
 
+                    let oldCreateName = { name: "aucun" };
+                    let oldArchiveName = { name: "aucun" };
+
                     if (data[0] !== undefined) {
                         oldCategoryCreate = data[0].categorycreate
                         oldCategoryArchive = data[0].categoryarchive
-
-                        let oldCreateName = { name: "aucun" };
-                        let oldArchiveName = { name: "aucun" };
 
                         if (oldCategoryCreate !== "Aucun" && oldCategoryArchive !== "Aucun") {
                             oldCreateName = interaction.guild.channels.cache.get(oldCategoryCreate)
