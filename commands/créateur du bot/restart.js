@@ -14,7 +14,7 @@ module.exports = {
     runSlash: async (client, interaction) => {
 
         //commands
-        console.log("Rechargement des commands : ")
+        interaction.channel.send("Rechargement des commands : ")
         const FolderCommands = readdirSync('./commands/');
         for (category of FolderCommands) {
             const commandsFiles = readdirSync(`./commands/${category}/`).filter(file => file.endsWith('.js'))
@@ -23,7 +23,7 @@ module.exports = {
                 const cmd = require(`../../commands/${category}/${file}`);
                 client.commands.set(cmd.name, cmd)
             }
-            console.log(`${category} a été rechargé avec sucess ✅`)
+            interaction.channel.send(`La catégorie \`${category}\` a été rechargée avec succès ✅`)
         }
 
         console.log("-----------------------------------------------------------------------------------")
