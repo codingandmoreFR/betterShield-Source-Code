@@ -13,19 +13,19 @@ module.exports = {
     options: [
         {
             name: "activé",
-            description: "activé le système de ticket",
+            description: "active le système de ticket",
             type: 1, // 1 is type SUB_COMMAND
             options: [
                 {
                     name: "category_archive",
-                    description: "Le category ou seront archivées les tickets (Obligatoire)",
+                    description: "La categorie ou seront archivés les tickets (Obligatoire)",
                     type: 'STRING', // 7 is type CHANNEL
                     required: true,
                     autocomplete: true
                 },
                 {
                     name: "category_ouverte",
-                    description: "Le category ou seront créée les tickets (Non obligatoire)",
+                    description: "La categorie ou seront créés les tickets (Non obligatoire)",
                     type: 'STRING', // 7 is type CHANNEL
                     required: false,
                     autocomplete: true
@@ -34,7 +34,7 @@ module.exports = {
         },
         {
             name: "désactivé",
-            description: "désactivé le système de logs",
+            description: "désactive le système de logs",
             type: 1
         }
     ],
