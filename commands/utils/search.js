@@ -23,7 +23,7 @@ module.exports = {
         let args = recherche.replace(/\s+/g, '+')
         let embedSearch = new MessageEmbed()
         .setColor("RANDOM")
-        .setTitle(`Voici votre recherche : `)
+        .setTitle(`<:website:973641610757828658>  Voici votre recherche : `)
         .setDescription(`https://www.google.fr/search?q=${args}`)
         .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
         .setTimestamp()
