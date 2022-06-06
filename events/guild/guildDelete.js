@@ -5,7 +5,7 @@ module.exports = {
     name: "guildDelete",
     once: false,
     async execute(client, guild){
-        Logger.autre("on m'a supprimé d'un serveur !")
+        Logger.reste("on m'a supprimé d'un serveur !")
         let owner = await guild.fetchOwner();
         let embed = new MessageEmbed()
             .setTitle("On m'a supprimé d'un serveur !")

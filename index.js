@@ -6,8 +6,8 @@ const { Client, Collection, MessageEmbed } = require("discord.js")
 const { prefix } = require("./config/config.json")
 const { noir, blanc } = require("./config/colors.json")
 const dotenv = require("dotenv")
-const mongoose = require("mongoose")
 dotenv.config()
+const mongoose = require("mongoose")
 const client = new Client({ intents: 32767 });
 const dayjs = require("dayjs")
 const chalk = require("chalk")
@@ -60,4 +60,4 @@ module.exports = {
 //     Logger.warn("- Non connecté à la base de données." + err)
 // })
 
-client.login(process.env.DISCORD_TOKEN)
+client.login();
