@@ -41,6 +41,7 @@ const wait = time => {
 };
 
 module.exports = {
+    request,
     pRequest,
     discordRequest,
     wait
