@@ -2,7 +2,7 @@
 Repository GitHub : https://github.com/codingandmoreFR/betterShield/upload/main
 */
 
-const { Client, Collection, MessageEmbed } = require("discord.js")
+const { Client, Collection } = require("discord.js")
 const { prefix } = require("./config/config.json")
 const { noir, blanc } = require("./config/colors.json")
 const dotenv = require("dotenv")
@@ -16,7 +16,8 @@ const sqlite3 = require("sqlite3").verbose();
 const dbname = 'main.db'
 
 
-client.commands = new Collection()
+client.commands = new Collection();
+client.functions = require('./utils/Functions');
 
 const array = ["CommandUtil", "EventUtil"]
 array.forEach(handler => { require(`./utils/handlers/${handler}`)(client) })

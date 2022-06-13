@@ -1,28 +1,3 @@
-const { request } = require('https');
-
-const pRequest = (options, toWrite) => {
-    return new Promise((resolve, reject) => {
-        const req = request(options, res => {
-            let data = '';
-
-            res.on('data', d => data += d.toString());
-            res.on('end', () => {
-                try {
-                    resolve(JSON.parse(data));
-                } catch (error) {
-                    resolve(data);
-                };
-            });
-            res.on('error', reject);
-        });
-        req.on('error', reject);
-        if (toWrite && req.writable) {
-            req.write(JSON.stringify(toWrite));
-        };
-        req.end();
-    });
-}
-
 module.exports = {
     name: "seturl",
     description: "Règle l'url personalisé du serveur",
@@ -45,20 +20,9 @@ module.exports = {
         if (oldVanity.code == code) {
             return interaction.reply({ ephemeral: true, content: "C'est le code actuel du serveur!" });
         };
-        
-        const headers = {
-            'Authorization': 'Bot ' + client.token,
-            'Content-Type': 'application/json'
-        };
-        const data = await pRequest({
-            headers,
-            method: 'PATCH',
-            hostname: 'discord.com',
-            path: `/api/v9/guilds/${interaction.guild.id}/vanity-url`,
-        }, {
-            code
-        });
-        
+
+        const data = await client.functions.discordRequest(`/guilds/${interaction.guild.id}/vanity-url`, client.token, 'PATCH', { code });  
+              
         if (data.code == code) {
             interaction.reply({ content: `Code changé avec succès!\n${oldVanity.code} -> ${code}` });
         } else {
