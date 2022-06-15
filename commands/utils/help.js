@@ -45,12 +45,13 @@ module.exports = {
             const noArgsEmbed = new MessageEmbed()
             .setColor("RANDOM")
             .setTitle("Commandes disponibles")
-            .setDescription("Si tu souhaite avoir plus d'informations sur une commande, tape `/help <commande>`.")
+            .setDescription(`Si tu souhaite avoir plus d'informations sur une commande, tape \`/help <commande>\`.\n**Nombres de commandes : ${client.commands.size}**`)
             .setTimestamp()
             .setFooter({ text: `Par ${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL({ dynamic: true }) })
             for (const category of commandFolder){
+                const dir = client.commands.filter(c => c.category === category)
                 noArgsEmbed.addField(
-                `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())}`, 
+                `${category.replace(/^[a-z]/, firstLetter => firstLetter.toUpperCase())} [${dir.size}]`, 
                 `\`${client.commands.filter(cmd => cmd.category == category.toLowerCase()).map(cmd => cmd.name).join(', ') || "Aucune"}\``
                 )
             }
